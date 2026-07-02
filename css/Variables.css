@@ -1,0 +1,110 @@
+/* ==========================================================================
+   VARIABLES.CSS
+   "23 Years of You, Forever Us" — Design Token System
+   --------------------------------------------------------------------------
+   Every section of this site must consume ONLY these tokens for color,
+   type, spacing, radius, shadow, and motion. Do not hardcode hex values
+   or px sizes in section stylesheets — add a token here instead.
+   ========================================================================== */
+
+:root {
+  /* ---------------------------------------------------------------------
+     COLOR — brief-specified core, plus derived tones we need for real UI
+     (hover states, borders, overlays). Gold + pink are RARE ACCENTS ONLY:
+     gold marks significant moments (CTAs, reveals), pink marks hearts.
+     --------------------------------------------------------------------- */
+  --color-navy: #0f172a;          /* base canvas */
+  --color-navy-deep: #080d1a;     /* deepest gradient stop / footer */
+  --color-navy-raised: #16213d;   /* card backgrounds before glass blur */
+  --color-royal: #2563eb;         /* primary brand blue */
+  --color-royal-light: #3b82f6;   /* hover / gradient partner */
+  --color-royal-glow: #60a5fa;    /* glow/shadow tint */
+  --color-white: #ffffff;
+  --color-white-soft: #e2e8f0;    /* body text on navy, softer than pure white */
+  --color-gold: #fbbf24;          /* accent — significant moments only */
+  --color-gold-soft: #fde68a;
+  --color-pink: #ff7eb6;          /* hearts only */
+
+  /* Glassmorphism surfaces */
+  --glass-fill: rgba(255, 255, 255, 0.06);
+  --glass-fill-strong: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --glass-border-gold: rgba(251, 191, 36, 0.4);
+  --glass-blur: blur(16px);
+
+  /* Gradients */
+  --gradient-hero: radial-gradient(120% 120% at 50% 0%, #1e3a8a 0%, #0f172a 55%, #080d1a 100%);
+  --gradient-royal: linear-gradient(135deg, var(--color-royal) 0%, var(--color-royal-light) 100%);
+  --gradient-gold: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  --gradient-text-shine: linear-gradient(90deg, #ffffff 0%, #93c5fd 50%, #ffffff 100%);
+
+  /* ---------------------------------------------------------------------
+     TYPOGRAPHY
+     --------------------------------------------------------------------- */
+  --font-display: 'Playfair Display', serif;   /* headings */
+  --font-body: 'Poppins', sans-serif;           /* body / UI */
+  --font-script: 'Great Vibes', cursive;        /* quotes / signature lines only */
+
+  --fs-xs: clamp(0.75rem, 0.7rem + 0.2vw, 0.85rem);
+  --fs-sm: clamp(0.875rem, 0.83rem + 0.2vw, 1rem);
+  --fs-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --fs-lg: clamp(1.25rem, 1.15rem + 0.4vw, 1.5rem);
+  --fs-xl: clamp(1.75rem, 1.5rem + 1vw, 2.5rem);
+  --fs-2xl: clamp(2.25rem, 1.9rem + 1.5vw, 3.5rem);
+  --fs-3xl: clamp(3rem, 2.4rem + 2.5vw, 5rem);
+  --fs-script: clamp(2rem, 1.6rem + 1.8vw, 3.25rem);
+
+  --lh-tight: 1.15;
+  --lh-normal: 1.6;
+  --ls-eyebrow: 0.28em; /* letter-spacing for small uppercase labels */
+
+  /* ---------------------------------------------------------------------
+     SPACING SCALE (8px base rhythm)
+     --------------------------------------------------------------------- */
+  --space-1: 0.5rem;
+  --space-2: 0.75rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
+  --space-7: 4.5rem;
+  --space-8: 6rem;
+  --space-9: 9rem;
+
+  --section-padding-y: clamp(4rem, 6vw, 8rem);
+  --section-padding-x: clamp(1.25rem, 5vw, 4rem);
+  --content-max-width: 1200px;
+  --content-narrow: 720px;
+
+  /* ---------------------------------------------------------------------
+     RADIUS & SHADOW
+     --------------------------------------------------------------------- */
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 28px;
+  --radius-pill: 999px;
+
+  --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.25);
+  --shadow-card: 0 20px 60px rgba(0, 0, 0, 0.35);
+  --shadow-glow-royal: 0 0 40px rgba(37, 99, 235, 0.45);
+  --shadow-glow-gold: 0 0 45px rgba(251, 191, 36, 0.4);
+  --shadow-glow-pink: 0 0 35px rgba(255, 126, 182, 0.4);
+
+  /* ---------------------------------------------------------------------
+     MOTION — shared easings/durations so every section animates alike
+     --------------------------------------------------------------------- */
+  --ease-luxury: cubic-bezier(0.22, 1, 0.36, 1);   /* signature "soft settle" ease */
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  --dur-fast: 0.25s;
+  --dur-med: 0.5s;
+  --dur-slow: 0.9s;
+
+  /* Z-index scale — keep every section's layering predictable */
+  --z-aurora: 0;
+  --z-content: 10;
+  --z-nav: 500;
+  --z-cursor: 800;
+  --z-loader: 900;
+  --z-modal: 950;
+  --z-toast: 999;
+}

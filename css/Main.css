@@ -1,0 +1,15 @@
+/* ==========================================================================
+   MAIN.CSS — import manifest
+   Order matters: tokens → base/reset → components → sections (added as
+   we build each one). Keep every new section's stylesheet appended here,
+   in page order, so cascade stays predictable.
+   ========================================================================== */
+
+@import url('variables.css');
+@import url('base.css');
+
+/* Section stylesheets will be appended below as we build them, e.g.:
+   @import url('sections/loading.css');
+   @import url('sections/welcome.css');
+   @import url('sections/gallery.css');
+   ... */

@@ -1,0 +1,283 @@
+/* ==========================================================================
+   BASE.CSS
+   Reset, global typography, and reusable primitives.
+   Section-specific stylesheets (e.g. loading.css, gallery.css) should
+   compose THESE classes rather than reinventing cards/buttons/labels.
+   ========================================================================== */
+
+/* ---- Reset -------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 2rem;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  color: var(--color-white-soft);
+  background: var(--color-navy);
+  overflow-x: hidden;
+  min-height: 100vh;
+  /* Section backgrounds sit above the fixed aurora canvas */
+  position: relative;
+}
+
+img, svg, video, canvas { display: block; max-width: 100%; }
+
+a { color: inherit; text-decoration: none; }
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+ul, ol { list-style: none; }
+
+/* Respect users who've asked for less motion, site-wide */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- Typography ----------------------------------------------------------
+   h1/h2 use Playfair Display italic for the most emotional lines; h3/h4
+   stay upright so the italic reads as a deliberate accent, not a default. */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: var(--lh-tight);
+  color: var(--color-white);
+}
+
+h1 { font-size: var(--fs-3xl); font-style: italic; }
+h2 { font-size: var(--fs-2xl); font-style: italic; }
+h3 { font-size: var(--fs-xl); }
+h4 { font-size: var(--fs-lg); }
+
+p { max-width: 65ch; }
+
+.script-text {
+  font-family: var(--font-script);
+  font-size: var(--fs-script);
+  font-weight: 400;
+  color: var(--color-gold-soft);
+  line-height: 1.3;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-royal-glow);
+  margin-bottom: var(--space-3);
+}
+
+.text-gradient {
+  background: var(--gradient-text-shine);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-size: 200% auto;
+}
+
+/* ---- Layout primitives --------------------------------------------------- */
+.section {
+  position: relative;
+  z-index: var(--z-content);
+  padding: var(--section-padding-y) var(--section-padding-x);
+  max-width: var(--content-max-width);
+  margin-inline: auto;
+}
+
+.section-inner--narrow {
+  max-width: var(--content-narrow);
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* Fixed, ambient aurora canvas — the site's signature throughline.
+   #aurora-canvas is drawn by js/aurora.js; this just positions it. */
+.aurora-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: var(--z-aurora);
+  background: var(--gradient-hero);
+  pointer-events: none;
+}
+
+/* ---- Glass card ----------------------------------------------------------
+   The core surface used by nearly every section: gallery, reasons,
+   quiz, scoreboard, gift reveal, final message. */
+.glass-card {
+  position: relative;
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-card);
+  transition: transform var(--dur-med) var(--ease-luxury),
+              box-shadow var(--dur-med) var(--ease-luxury),
+              border-color var(--dur-med) var(--ease-luxury);
+}
+
+.glass-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--glass-border-gold);
+  box-shadow: var(--shadow-card), var(--shadow-glow-royal);
+}
+
+/* ---- Buttons ---------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  letter-spacing: 0.03em;
+  transition: transform var(--dur-fast) var(--ease-luxury),
+              box-shadow var(--dur-fast) var(--ease-luxury),
+              filter var(--dur-fast) var(--ease-luxury);
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+.btn--primary {
+  background: var(--gradient-royal);
+  color: var(--color-white);
+  box-shadow: var(--shadow-glow-royal);
+}
+
+.btn--primary:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 0 55px rgba(37, 99, 235, 0.65);
+  transform: translateY(-3px);
+}
+
+.btn--gold {
+  background: var(--gradient-gold);
+  color: var(--color-navy-deep);
+  box-shadow: var(--shadow-glow-gold);
+}
+
+.btn--gold:hover {
+  filter: brightness(1.08);
+  transform: translateY(-3px);
+}
+
+/* ---- Floating hearts / sparkles ambient layer -----------------------------
+   Reusable markup: <span class="floating-heart" style="--x:10%; --delay:2s">
+   Sections drop these into a container positioned as needed. */
+.floating-heart {
+  position: absolute;
+  left: var(--x, 50%);
+  bottom: -5%;
+  color: var(--color-pink);
+  opacity: 0.75;
+  font-size: var(--size, 1.25rem);
+  animation: float-up 8s var(--ease-luxury) infinite;
+  animation-delay: var(--delay, 0s);
+  pointer-events: none;
+}
+
+@keyframes float-up {
+  0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+  10%  { opacity: 0.85; }
+  50%  { transform: translateY(-50vh) translateX(15px) rotate(10deg); }
+  90%  { opacity: 0.4; }
+  100% { transform: translateY(-100vh) translateX(-10px) rotate(-8deg); opacity: 0; }
+}
+
+.sparkle {
+  position: absolute;
+  color: var(--color-gold);
+  animation: twinkle 2.4s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
+/* ---- Back to top (heart-shaped) ------------------------------------------ */
+.back-to-top {
+  position: fixed;
+  bottom: var(--space-4);
+  right: var(--space-4);
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  background: var(--gradient-royal);
+  border-radius: 50% 50% 50% 0; /* heart-ish teardrop, refined with ::before/::after in component CSS */
+  box-shadow: var(--shadow-glow-royal);
+  z-index: var(--z-nav);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) rotate(45deg);
+  transition: opacity var(--dur-med) var(--ease-luxury),
+              transform var(--dur-med) var(--ease-luxury);
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) rotate(45deg);
+}
+
+.back-to-top i {
+  transform: rotate(-45deg);
+  color: var(--color-white);
+  font-size: 1.1rem;
+}
+
+.back-to-top:hover { filter: brightness(1.15); }
+.back-to-top:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 3px; }
+
+/* ---- Scrollbar (webkit) --------------------------------------------------- */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--color-navy-deep); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-royal);
+  border-radius: var(--radius-pill);
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-royal-light); }
+
+/* ---- Utility ---------------------------------------------------------- */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
