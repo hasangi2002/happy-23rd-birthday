@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>23 Years of You, Forever Us</title>
+  <meta name="description" content="A love letter, twenty-three years in the making." />
+
+  <!-- Preconnect for font/CDN performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Google Fonts: Playfair Display (headings), Poppins (body), Great Vibes (script) -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600;1,700&family=Poppins:wght@300;400;500;600;700&family=Great+Vibes&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Font Awesome (icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- AOS (Animate on Scroll) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css" />
+
+  <!-- Design system -->
+  <link rel="stylesheet" href="css/main.css" />
+
+  <!-- Favicon (add a small heart/crown icon at assets/icons/favicon.png) -->
+  <link rel="icon" href="assets/icons/favicon.png" type="image/png" />
+</head>
+<body class="is-loading">
+
+  <!-- ==========================================================
+       SIGNATURE AMBIENT LAYER
+       Fixed canvas behind all content — do not remove or nest
+       inside a section, it must stay a direct child of <body>.
+       ========================================================== -->
+  <canvas id="aurora-canvas" class="aurora-canvas" aria-hidden="true"></canvas>
+
+  <!-- ==========================================================
+       BACKGROUND MUSIC
+       Autoplay-blocked by browsers until user interacts (handled
+       in the Loading Screen section, which starts playback on
+       the "enter" interaction). Add the real track at:
+       assets/audio/background-music.mp3
+       ========================================================== -->
+  <audio id="bg-music" loop preload="none">
+    <source src="assets/audio/background-music.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- ==========================================================
+       MAIN CONTENT
+       Each numbered section below will be built one at a time,
+       in its own <section>, per your next prompts. Do not reorder.
+       ========================================================== -->
+  <!-- ==========================================================
+       1. LOADING SCREEN
+       Fixed full-screen overlay, above the aurora. Removed from
+       view (display:none) by js/sections/loading.js once the
+       count-up finishes; dispatches `loadingComplete` on window.
+       ========================================================== -->
+  <section id="loading-screen" class="loading-screen" aria-label="Loading">
+
+    <!-- Ambient layers: JS spawns floating hearts / sparkles into these -->
+    <div class="loading-screen__hearts" aria-hidden="true"></div>
+    <div class="loading-screen__sparkles" aria-hidden="true"></div>
+
+    <div class="loading-card glass-card">
+      <!-- Circular glowing progress ring -->
+      <div class="loader">
+        <svg class="loader__ring" viewBox="0 0 120 120">
+          <circle class="loader__ring-track" cx="60" cy="60" r="52"></circle>
+          <circle class="loader__ring-progress" cx="60" cy="60" r="52"></circle>
+        </svg>
+        <span class="loader__percentage" id="loading-percentage">0%</span>
+      </div>
+
+      <p class="loading-card__title">💙 Loading...</p>
+      <p class="loading-card__subtitle">Preparing something special...</p>
+      <p class="loading-card__message script-text">For the world's most handsome birthday boy...</p>
+    </div>
+  </section>
+
+  <main id="main-content">
+
+    <!-- 2. Welcome Screen        -->  <!-- <section id="welcome">…</section> -->
+    <!-- 3. Photo Gallery         -->  <!-- <section id="gallery">…</section> -->
+    <!-- 4. Reasons Why I Love You --> <!-- <section id="reasons">…</section> -->
+    <!-- 5. Love Meter            -->  <!-- <section id="love-meter">…</section> -->
+    <!-- 6. Scratch Card          -->  <!-- <section id="scratch-card">…</section> -->
+    <!-- 7. Quiz About Us         -->  <!-- <section id="quiz">…</section> -->
+    <!-- 8. Our Love Scorecard    -->  <!-- <section id="scorecard">…</section> -->
+    <!-- 9. Surprise Gift         -->  <!-- <section id="gift">…</section> -->
+    <!-- 10. Celebration          -->  <!-- <section id="celebration">…</section> -->
+    <!-- 11. Final Page           -->  <!-- <section id="final">…</section> -->
+
+  </main>
+
+  <!-- Heart-shaped back-to-top button (global feature, works once content exists) -->
+  <button class="back-to-top" aria-label="Back to top">
+    <i class="fa-solid fa-heart" aria-hidden="true"></i>
+  </button>
+
+  <!-- ==========================================================
+       LIBRARIES (CDN)
+       ========================================================== -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+
+  <!-- ==========================================================
+       APP SCRIPTS — load order matters: aurora + main are core,
+       then one script per section, appended here as we build them.
+       ========================================================== -->
+  <script src="js/aurora.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/sections/loading.js"></script>
+  <!-- <script src="js/sections/welcome.js"></script> -->
+
+</body>
+</html>
