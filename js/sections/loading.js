@@ -73,56 +73,22 @@ const LoadingScreen = (() => {
   }
 
   /**
-   * Spawns one floating blue heart at a random horizontal position,
-   * cleans itself up after its float animation finishes.
+   * Spawns ambient hearts/sparkles via the shared Effects utility (see
+   * js/utils/effects.js). This section's blue tint comes from the
+   * `.loading-screen__hearts .floating-heart` / `.loading-screen__sparkles
+   * .sparkle` color overrides in loading.css — Effects itself stays
+   * color-agnostic so it can be reused by other sections unchanged.
    */
-  function spawnHeart() {
-    const heart = document.createElement('i');
-    heart.className = 'fa-solid fa-heart floating-heart';
-    heart.setAttribute('aria-hidden', 'true');
-
-    const x = Math.random() * 100; // vw %
-    const size = 0.9 + Math.random() * 1.1; // rem
-    const duration = 6 + Math.random() * 4; // seconds
-    const delay = 0;
-
-    heart.style.setProperty('--x', `${x}%`);
-    heart.style.setProperty('--size', `${size}rem`);
-    heart.style.setProperty('--delay', `${delay}s`);
-    heart.style.animationDuration = `${duration}s`;
-
-    heartsContainer.appendChild(heart);
-    setTimeout(() => heart.remove(), duration * 1000 + 200);
-  }
-
-  /**
-   * Spawns one sparkle at a random position on screen; it twinkles a
-   * couple of times then removes itself.
-   */
-  function spawnSparkle() {
-    const sparkle = document.createElement('span');
-    sparkle.className = 'sparkle';
-    sparkle.textContent = '✦';
-    sparkle.setAttribute('aria-hidden', 'true');
-
-    sparkle.style.left = `${Math.random() * 100}%`;
-    sparkle.style.top = `${Math.random() * 100}%`;
-    sparkle.style.animationDuration = `${1.8 + Math.random() * 1.2}s`;
-
-    sparklesContainer.appendChild(sparkle);
-    setTimeout(() => sparkle.remove(), 3200);
-  }
-
   function startAmbientEffects() {
     if (reduceMotion) return; // keep the screen calm for reduced-motion users
 
-    heartInterval = setInterval(spawnHeart, 550);
-    sparkleInterval = setInterval(spawnSparkle, 350);
+    heartInterval = setInterval(() => Effects.spawnHeart(heartsContainer), 550);
+    sparkleInterval = setInterval(() => Effects.spawnSparkle(sparklesContainer), 350);
 
     // seed a few immediately so it doesn't feel empty on first paint
     for (let i = 0; i < 5; i++) {
-      setTimeout(spawnHeart, i * 150);
-      setTimeout(spawnSparkle, i * 100);
+      setTimeout(() => Effects.spawnHeart(heartsContainer), i * 150);
+      setTimeout(() => Effects.spawnSparkle(sparklesContainer), i * 100);
     }
   }
 

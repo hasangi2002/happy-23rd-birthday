@@ -83,7 +83,41 @@
 
   <main id="main-content">
 
-    <!-- 2. Welcome Screen        -->  <!-- <section id="welcome">…</section> -->
+    <!-- ==========================================================
+         2. WELCOME SCREEN
+         Cinematic hero. Starts hidden (see welcome.css) and reveals
+         itself once js/sections/loading.js dispatches
+         `loadingComplete`. "Open Your Surprise" triggers confetti,
+         a balloon burst, starts the music, and smooth-scrolls into
+         whatever section comes next.
+         ========================================================== -->
+    <section id="welcome" class="welcome" aria-label="Welcome">
+
+      <!-- particles.js mounts its canvas into this div -->
+      <div id="particles-js" class="welcome__particles" aria-hidden="true"></div>
+
+      <!-- Slow-drifting ambient glow blobs -->
+      <div class="welcome__glow welcome__glow--one" aria-hidden="true"></div>
+      <div class="welcome__glow welcome__glow--two" aria-hidden="true"></div>
+
+      <!-- JS spawns ambient hearts / balloons into these -->
+      <div class="welcome__hearts" aria-hidden="true"></div>
+      <div class="welcome__balloons" aria-hidden="true"></div>
+
+      <div class="welcome__content">
+        <p class="eyebrow welcome__eyebrow">23 Years of You</p>
+        <h1 class="welcome__title">
+          Happy 23rd Birthday <span class="heart-icon" aria-hidden="true">❤️</span>
+        </h1>
+        <p class="welcome__subtitle">
+          To the person<br />who made my ordinary days magical...
+        </p>
+        <button class="btn btn--glass welcome__cta" id="open-surprise-btn">
+          <span>Open Your Surprise</span> <span aria-hidden="true">💙</span>
+        </button>
+      </div>
+    </section>
+
     <!-- 3. Photo Gallery         -->  <!-- <section id="gallery">…</section> -->
     <!-- 4. Reasons Why I Love You --> <!-- <section id="reasons">…</section> -->
     <!-- 5. Love Meter            -->  <!-- <section id="love-meter">…</section> -->
@@ -114,9 +148,10 @@
        then one script per section, appended here as we build them.
        ========================================================== -->
   <script src="js/aurora.js"></script>
+  <script src="js/utils/effects.js"></script>
   <script src="js/main.js"></script>
   <script src="js/sections/loading.js"></script>
-  <!-- <script src="js/sections/welcome.js"></script> -->
+  <script src="js/sections/welcome.js"></script>
 
 </body>
 </html>
