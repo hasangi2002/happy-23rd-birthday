@@ -118,7 +118,142 @@
       </div>
     </section>
 
-    <!-- 3. Photo Gallery         -->  <!-- <section id="gallery">…</section> -->
+    <!-- ==========================================================
+         3. PHOTO GALLERY
+         12 polaroid placeholders — replace each img src (and the
+         matching data-full) with real photos at:
+         assets/images/gallery-01.jpg … gallery-12.jpg
+         Captions are placeholder text; edit freely in the markup below.
+         If an image fails to load, gallery.js swaps in a calm
+         placeholder icon instead of a broken-image glyph.
+         ========================================================== -->
+    <section id="gallery" class="gallery section" aria-label="Photo gallery">
+      <div class="gallery__header">
+        <p class="eyebrow">Captured Moments</p>
+        <h2 class="gallery__title">Our Beautiful Memories</h2>
+      </div>
+
+      <div class="gallery__grid">
+        <div class="gallery__item" data-aos="fade-up" data-aos-delay="0">
+          <div class="polaroid" data-full="assets/images/gallery-01.jpg" data-caption="Our First Hello">
+            <div class="polaroid__photo">
+              <img src="assets/images/gallery-01.jpg" alt="Our First Hello" loading="lazy" />
+            </div>
+            <p class="polaroid__caption">Our First Hello</p>
+          </div>
+        </div>
+        <div class="gallery__item" data-aos="fade-up" data-aos-delay="60">
+          <div class="polaroid" data-full="assets/images/gallery-02.jpg" data-caption="Late Night Talks">
+            <div class="polaroid__photo">
+              <img src="assets/images/gallery-02.jpg" alt="Late Night Talks" loading="lazy" />
+            </div>
+            <p class="polaroid__caption">Late Night Talks</p>
+          </div>
+        </div>
+        <div class="gallery__item" data-aos="fade-up" data-aos-delay="120">
+          <div class="polaroid" data-full="assets/images/gallery-03.jpg" data-caption="Silly Faces">
+            <div class="polaroid__photo">
+              <img src="assets/images/gallery-03.jpg" alt="Silly Faces" loading="lazy" />
+            </div>
+            <p class="polaroid__caption">Silly Faces</p>
+          </div>
+        </div>
+        <div class="gallery__item" data-aos="fade-up" data-aos-delay="180">
+          <div class="polaroid" data-full="assets/images/gallery-04.jpg" data-caption="Adventures Together">
+            <div class="polaroid__photo">
+              <img src="assets/images/gallery-04.jpg" alt="Adventures Together" loading="lazy" />
+            </div>
+            <p class="polaroid__caption">Adventures Together</p>
+          </div>
+        </div>
+        <div class="gallery__item" data-aos="fade-up" data-aos-delay="240">
+          <div class="polaroid" data-full="assets/images/gallery-05.jpg" data-caption="Quiet Mornings">
+            <div class="polaroid__photo">
+              <img src="assets/images/gallery-05.jpg" alt="Quiet Mornings" loading="lazy" />
+            </div>
+            <p class="polaroid__caption">Quiet Mornings</p>
+          </div>
+        </div>
+        <div class="gallery__item" data-aos="fade-up" data-aos-delay="300">
+          <div class="polaroid" data-full="assets/images/gallery-06.jpg" data-caption="Under the Stars">
+            <div class="polaroid__photo">
+              <img src="assets/images/gallery-06.jpg" alt="Under the Stars" loading="lazy" />
+            </div>
+            <p class="polaroid__caption">Under the Stars</p>
+          </div>
+        </div>
+        <div class="gallery__item" data-aos="fade-up" data-aos-delay="360">
+          <div class="polaroid" data-full="assets/images/gallery-07.jpg" data-caption="Road Trip Memories">
+            <div class="polaroid__photo">
+              <img src="assets/images/gallery-07.jpg" alt="Road Trip Memories" loading="lazy" />
+            </div>
+            <p class="polaroid__caption">Road Trip Memories</p>
+          </div>
+        </div>
+        <div class="gallery__item" data-aos="fade-up" data-aos-delay="420">
+          <div class="polaroid" data-full="assets/images/gallery-08.jpg" data-caption="Just Us">
+            <div class="polaroid__photo">
+              <img src="assets/images/gallery-08.jpg" alt="Just Us" loading="lazy" />
+            </div>
+            <p class="polaroid__caption">Just Us</p>
+          </div>
+        </div>
+        <div class="gallery__item" data-aos="fade-up" data-aos-delay="480">
+          <div class="polaroid" data-full="assets/images/gallery-09.jpg" data-caption="Celebrating Life">
+            <div class="polaroid__photo">
+              <img src="assets/images/gallery-09.jpg" alt="Celebrating Life" loading="lazy" />
+            </div>
+            <p class="polaroid__caption">Celebrating Life</p>
+          </div>
+        </div>
+        <div class="gallery__item" data-aos="fade-up" data-aos-delay="540">
+          <div class="polaroid" data-full="assets/images/gallery-10.jpg" data-caption="Home Is You">
+            <div class="polaroid__photo">
+              <img src="assets/images/gallery-10.jpg" alt="Home Is You" loading="lazy" />
+            </div>
+            <p class="polaroid__caption">Home Is You</p>
+          </div>
+        </div>
+        <div class="gallery__item" data-aos="fade-up" data-aos-delay="600">
+          <div class="polaroid" data-full="assets/images/gallery-11.jpg" data-caption="Forever Laughing">
+            <div class="polaroid__photo">
+              <img src="assets/images/gallery-11.jpg" alt="Forever Laughing" loading="lazy" />
+            </div>
+            <p class="polaroid__caption">Forever Laughing</p>
+          </div>
+        </div>
+        <div class="gallery__item" data-aos="fade-up" data-aos-delay="660">
+          <div class="polaroid" data-full="assets/images/gallery-12.jpg" data-caption="My Favorite Person">
+            <div class="polaroid__photo">
+              <img src="assets/images/gallery-12.jpg" alt="My Favorite Person" loading="lazy" />
+            </div>
+            <p class="polaroid__caption">My Favorite Person</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lightbox modal — one shared instance for the whole gallery -->
+    <div class="lightbox" id="gallery-lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+      <div class="lightbox__content">
+        <button class="lightbox__close" id="lightbox-close" aria-label="Close photo viewer">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+        <button class="lightbox__nav lightbox__nav--prev" id="lightbox-prev" aria-label="Previous photo">
+          <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+        </button>
+        <button class="lightbox__nav lightbox__nav--next" id="lightbox-next" aria-label="Next photo">
+          <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+        </button>
+
+        <div class="lightbox__frame">
+          <img id="lightbox-img" src="" alt="" />
+        </div>
+        <p class="lightbox__caption" id="lightbox-caption"></p>
+        <p class="lightbox__counter" id="lightbox-counter"></p>
+      </div>
+    </div>
+
     <!-- 4. Reasons Why I Love You --> <!-- <section id="reasons">…</section> -->
     <!-- 5. Love Meter            -->  <!-- <section id="love-meter">…</section> -->
     <!-- 6. Scratch Card          -->  <!-- <section id="scratch-card">…</section> -->
@@ -152,6 +287,7 @@
   <script src="js/main.js"></script>
   <script src="js/sections/loading.js"></script>
   <script src="js/sections/welcome.js"></script>
+  <script src="js/sections/gallery.js"></script>
 
 </body>
 </html>

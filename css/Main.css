@@ -11,5 +11,5 @@
 /* Section stylesheets will be appended below as we build them,*/
    @import url('sections/loading.css');
    @import url('sections/welcome.css');
-/*@import url('sections/gallery.css');
-   ... */
+   @import url('sections/gallery.css');
+   

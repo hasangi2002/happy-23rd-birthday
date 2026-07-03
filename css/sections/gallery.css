@@ -1,0 +1,293 @@
+/* ==========================================================================
+   SECTIONS/GALLERY.CSS
+   Section 3 — Romantic Photo Gallery
+   A responsive grid of "polaroid" cards, each with a slight fixed
+   rotation (deterministic per nth-child, not Math.random(), so the
+   layout never shifts between reloads) plus a continuous gentle float.
+   Clicking a photo opens the glass lightbox defined at the bottom.
+   ========================================================================== */
+
+.gallery {
+  position: relative;
+  text-align: center;
+}
+
+.gallery__header {
+  margin-bottom: var(--space-7);
+}
+
+.gallery__title {
+  margin-top: var(--space-1);
+}
+
+/* ---- Grid -------------------------------------------------------------- */
+.gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-6) var(--space-5);
+  max-width: 1100px;
+  margin-inline: auto;
+  padding-block: var(--space-4); /* room for float travel + rotation so nothing clips */
+}
+
+/* ---- Deterministic "random" tilt + float-delay per card -----------------
+   Fixed per nth-child so it looks hand-scattered but never shifts on
+   reload or resize. Straightens to 0deg on hover (see .polaroid:hover). */
+.gallery__item { --tilt: 0deg; --i: 0; }
+.gallery__item:nth-child(1)  { --tilt: -4deg; --i: 0; }
+.gallery__item:nth-child(2)  { --tilt: 3deg;  --i: 1; }
+.gallery__item:nth-child(3)  { --tilt: -2deg; --i: 2; }
+.gallery__item:nth-child(4)  { --tilt: 5deg;  --i: 3; }
+.gallery__item:nth-child(5)  { --tilt: -3deg; --i: 4; }
+.gallery__item:nth-child(6)  { --tilt: 2deg;  --i: 5; }
+.gallery__item:nth-child(7)  { --tilt: 4deg;  --i: 0; }
+.gallery__item:nth-child(8)  { --tilt: -5deg; --i: 2; }
+.gallery__item:nth-child(9)  { --tilt: 3deg;  --i: 4; }
+.gallery__item:nth-child(10) { --tilt: -2deg; --i: 1; }
+.gallery__item:nth-child(11) { --tilt: 5deg;  --i: 3; }
+.gallery__item:nth-child(12) { --tilt: -4deg; --i: 5; }
+
+/* ---- Polaroid card ------------------------------------------------------- */
+.polaroid {
+  position: relative;
+  display: block;
+  width: 100%;
+  background: var(--color-white);
+  padding: 12px 12px 48px;
+  border-radius: 6px;
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+
+  transform: rotate(var(--tilt));
+  animation: polaroid-float 6s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 0.35s);
+
+  transition: transform var(--dur-med) var(--ease-luxury),
+              box-shadow var(--dur-med) var(--ease-luxury);
+}
+
+@keyframes polaroid-float {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -8px; }
+}
+
+/* Hover/focus: lift, straighten, glow — pause the float so the lift reads clearly */
+.polaroid:hover,
+.polaroid:focus-visible {
+  animation-play-state: paused;
+  transform: rotate(0deg) translateY(-12px) scale(1.03);
+  box-shadow: var(--shadow-card), var(--shadow-glow-royal);
+}
+
+.polaroid:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 4px;
+}
+
+/* ---- Photo + hover zoom + light-reflection sweep ------------------------- */
+.polaroid__photo {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  border-radius: 3px;
+  background: linear-gradient(135deg, var(--color-navy-raised), var(--color-navy));
+}
+
+.polaroid__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1);
+  transition: transform 0.6s var(--ease-luxury);
+}
+
+.polaroid:hover .polaroid__photo img {
+  transform: scale(1.1);
+}
+
+/* Diagonal light sweep on hover — a soft white band that travels across
+   the photo, like a glint of light catching a glossy print. */
+.polaroid__photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.35) 50%, transparent 60%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+
+.polaroid:hover .polaroid__photo::after {
+  transition: transform 0.9s ease;
+  transform: translateX(120%);
+}
+
+/* ---- Placeholder state (shown via JS if an <img> fails to load) --------- */
+.polaroid__photo--empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  color: var(--color-royal-glow);
+}
+
+.polaroid__photo--empty i {
+  font-size: 1.75rem;
+  opacity: 0.7;
+}
+
+.polaroid__photo--empty span {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  color: rgba(226, 232, 240, 0.6);
+  letter-spacing: 0.02em;
+}
+
+/* ---- Caption -------------------------------------------------------------- */
+.polaroid__caption {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--font-script);
+  font-size: 1.4rem;
+  color: var(--color-navy);
+}
+
+/* ===========================================================================
+   LIGHTBOX
+   Full-screen glass modal, opened by js/sections/gallery.js on click.
+   =========================================================================== */
+body.modal-open {
+  overflow: hidden;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+
+  background: rgba(8, 13, 26, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--dur-med) var(--ease-luxury), visibility var(--dur-med);
+}
+
+.lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox__content {
+  position: relative;
+  width: min(90vw, 720px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+
+  transform: scale(0.92);
+  transition: transform var(--dur-med) var(--ease-luxury);
+}
+
+.lightbox.is-open .lightbox__content {
+  transform: scale(1);
+}
+
+.lightbox__frame {
+  width: 100%;
+  max-height: 72vh;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-card), var(--shadow-glow-royal);
+  background: var(--color-navy-raised);
+}
+
+.lightbox__frame img {
+  width: 100%;
+  height: 100%;
+  max-height: 72vh;
+  object-fit: contain;
+  display: block;
+}
+
+.lightbox__caption {
+  font-family: var(--font-script);
+  font-size: var(--fs-script);
+  color: var(--color-gold-soft);
+}
+
+.lightbox__counter {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-royal-glow);
+}
+
+/* Close button */
+.lightbox__close {
+  position: absolute;
+  top: -18px;
+  right: -18px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--glass-fill-strong);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+  color: var(--color-white);
+  font-size: 1.1rem;
+  transition: transform var(--dur-fast) var(--ease-luxury), border-color var(--dur-fast);
+}
+.lightbox__close:hover { transform: rotate(90deg); border-color: var(--glass-border-gold); }
+.lightbox__close:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 3px; }
+
+/* Prev / Next arrows */
+.lightbox__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--glass-fill-strong);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+  color: var(--color-white);
+  font-size: 1.1rem;
+  transition: transform var(--dur-fast) var(--ease-luxury), border-color var(--dur-fast), box-shadow var(--dur-fast);
+}
+.lightbox__nav:hover { border-color: var(--glass-border-gold); box-shadow: var(--shadow-glow-royal); }
+.lightbox__nav:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 3px; }
+.lightbox__nav--prev { left: -60px; }
+.lightbox__nav--next { right: -60px; }
+
+/* ---- Responsive ----------------------------------------------------------- */
+@media (max-width: 860px) {
+  .lightbox__nav--prev { left: 4px; }
+  .lightbox__nav--next { right: 4px; }
+  .lightbox__close { top: 4px; right: 4px; }
+}
+
+@media (max-width: 480px) {
+  .gallery__grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-4) var(--space-3);
+  }
+  .polaroid { padding: 8px 8px 38px; }
+  .polaroid__caption { font-size: 1.15rem; }
+}
