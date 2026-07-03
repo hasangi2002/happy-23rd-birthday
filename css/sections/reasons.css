@@ -1,0 +1,175 @@
+/* ==========================================================================
+   SECTIONS/REASONS.CSS
+   Section 4 — Reasons Why I Love You
+   Each card is a real 3D flip: front shows a numbered "tap to reveal"
+   prompt, back reveals the reason. Cards start invisible (.reason-card,
+   not .is-visible) — reasons.js adds .is-visible to one card per second
+   as the section scrolls into view, producing the "appear one by one"
+   entrance called for in the brief.
+   ========================================================================== */
+
+.reasons__header {
+  text-align: center;
+  margin-bottom: var(--space-7);
+}
+
+.reasons__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-5);
+}
+
+/* ---- Reveal state ---------------------------------------------------------
+   Hidden by default (fade + rise), regardless of scroll position — JS
+   decides exactly when each card becomes visible, at a strict 1s cadence,
+   rather than letting per-element scroll position decide (like AOS does
+   for the Gallery). This is what gives the "one by one" pacing. */
+.reason-card {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s var(--ease-luxury), transform 0.7s var(--ease-luxury);
+}
+
+.reason-card.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- 3D flip setup ---------------------------------------------------------
+   .reason-card provides perspective; .reason-card__inner is the piece that
+   actually rotates. Idle float + hover glow live on the outer card so they
+   don't fight the flip's own transform. */
+.reason-card {
+  perspective: 1200px;
+  height: 220px;
+  cursor: pointer;
+
+  animation: reason-float 6.5s ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+
+.reason-card.is-visible:nth-child(3n)   { animation-duration: 7.2s; }
+.reason-card.is-visible:nth-child(3n+1) { animation-duration: 6.4s; }
+.reason-card.is-visible:nth-child(4n)   { animation-duration: 6.9s; }
+
+@keyframes reason-float {
+  0%, 100% { translate: 0 0; }
+  50%      { translate: 0 -7px; }
+}
+
+.reason-card:hover,
+.reason-card:focus-visible {
+  animation-play-state: paused;
+}
+
+.reason-card:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 4px;
+}
+
+.reason-card__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.7s var(--ease-luxury);
+  transform-style: preserve-3d;
+}
+
+.reason-card.is-flipped .reason-card__inner {
+  transform: rotateY(180deg);
+}
+
+/* ---- Card faces ------------------------------------------------------------
+   Both faces reuse .glass-card's visual language directly (rather than the
+   class itself, since .glass-card's own :hover rule would fight the flip
+   transform context) — kept visually identical on purpose. */
+.reason-card__face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow var(--dur-med) var(--ease-luxury),
+              border-color var(--dur-med) var(--ease-luxury);
+}
+
+.reason-card:hover .reason-card__face,
+.reason-card:focus-visible .reason-card__face {
+  border-color: var(--glass-border-gold);
+  box-shadow: var(--shadow-card), var(--shadow-glow-royal);
+}
+
+.reason-card__face--back {
+  transform: rotateY(180deg);
+}
+
+/* ---- Front face content ----------------------------------------------------- */
+.reason-card__number {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--fs-lg);
+  color: var(--color-royal-glow);
+  opacity: 0.85;
+}
+
+.reason-card__icon {
+  font-size: 1.8rem;
+  color: var(--color-pink);
+  text-shadow: 0 0 16px rgba(255, 126, 182, 0.55);
+  animation: icon-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes icon-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.12); }
+}
+
+.reason-card__hint {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-white-soft);
+  opacity: 0.7;
+}
+
+/* ---- Back face content (the revealed reason) --------------------------------
+   Slightly warmer glow than the front, since this is the "reveal" moment. */
+.reason-card__face--back {
+  box-shadow: var(--shadow-card), var(--shadow-glow-pink);
+}
+
+.reason-card__emoji {
+  font-size: 2rem;
+}
+
+.reason-card__text {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+  color: var(--color-white);
+  max-width: 26ch;
+}
+
+/* ---- Responsive -------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .reasons__grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-4);
+  }
+  .reason-card { height: 190px; }
+  .reason-card__text { font-size: var(--fs-xs); }
+}
