@@ -288,7 +288,38 @@
          No JS registration needed per-section — SceneTransitions
          auto-discovers every .scene element on the page.
          ========================================================== -->
-    <!-- 5. Love Meter            -->  <!-- <section id="love-meter" class="love-meter section scene">…</section> -->
+    <!-- ==========================================================
+         5. LOVE METER
+         Scan runs once via IntersectionObserver (see love-meter.js)
+         through the checkpoint sequence in CHECKPOINTS, then reveals
+         the "Maximum Capacity Reached" result.
+         ========================================================== -->
+    <section id="love-meter" class="love-meter section scene" aria-label="Love meter">
+      <div class="love-meter__header">
+        <p class="eyebrow">Scientifically Proven</p>
+        <h2 class="love-meter__title">Love Meter <span aria-hidden="true">❤️</span></h2>
+      </div>
+
+      <div class="love-meter__card glass-card">
+        <div class="love-meter__hearts" aria-hidden="true"></div>
+        <div class="love-meter__sparkles" aria-hidden="true"></div>
+
+        <div class="love-meter__scanner">
+          <i class="fa-solid fa-heart-pulse love-meter__pulse-icon" aria-hidden="true"></i>
+          <p class="love-meter__status" id="love-meter-status">Scanning...</p>
+          <div class="love-meter__bar-track">
+            <div class="love-meter__bar-fill" id="love-meter-fill"></div>
+          </div>
+          <p class="love-meter__percentage" id="love-meter-percentage" aria-live="polite">0%</p>
+        </div>
+
+        <div class="love-meter__result" id="love-meter-result" aria-live="polite">
+          <p class="love-meter__error">ERROR</p>
+          <p class="love-meter__error-sub">Maximum Capacity Reached <span aria-hidden="true">❤️</span></p>
+        </div>
+      </div>
+    </section>
+
     <!-- 6. Scratch Card          -->  <!-- <section id="scratch-card" class="scratch-card section scene">…</section> -->
     <!-- 7. Quiz About Us         -->  <!-- <section id="quiz" class="quiz section scene">…</section> -->
     <!-- 8. Our Love Scorecard    -->  <!-- <section id="scorecard" class="scorecard section scene">…</section> -->
@@ -324,6 +355,7 @@
   <script src="js/sections/welcome.js"></script>
   <script src="js/sections/gallery.js"></script>
   <script src="js/sections/reasons.js"></script>
+  <script src="js/sections/love-meter.js"></script>
 
 </body>
 </html>

@@ -1,0 +1,172 @@
+/* ==========================================================================
+   SECTIONS/LOVE-METER.CSS
+   Section 5 — Love Meter
+   A "futuristic scanner" card: neon progress bar climbs through a set of
+   stepped percentages (see love-meter.js), then the whole card glitches
+   into a cheerful "ERROR — Maximum Capacity Reached" reveal. Starts
+   dormant; js/sections/love-meter.js triggers the scan once the section
+   scrolls into view.
+   ========================================================================== */
+
+.love-meter__header {
+  text-align: center;
+  margin-bottom: var(--space-6);
+}
+
+.love-meter__card {
+  position: relative;
+  max-width: 560px;
+  margin-inline: auto;
+  padding: var(--space-7) var(--space-5);
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Ambient layers — same mechanism as Loading/Welcome, tinted blue to
+   match this section's "scanner" theme. */
+.love-meter__hearts,
+.love-meter__sparkles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.love-meter__hearts .floating-heart {
+  color: var(--color-royal-glow);
+  text-shadow: 0 0 12px rgba(96, 165, 250, 0.7);
+}
+
+.love-meter__sparkles .sparkle {
+  color: var(--color-royal-glow);
+  text-shadow: 0 0 8px rgba(96, 165, 250, 0.8);
+}
+
+/* ---- Scanner ---------------------------------------------------------- */
+.love-meter__scanner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.love-meter__pulse-icon {
+  font-size: 2.75rem;
+  color: var(--color-pink);
+  text-shadow: 0 0 20px rgba(255, 126, 182, 0.6);
+  animation: heartbeat 1.4s ease-in-out infinite;
+}
+
+/* A real heartbeat rhythm: quick double-pulse, then a rest. */
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14%      { transform: scale(1.22); }
+  28%      { transform: scale(1); }
+  42%      { transform: scale(1.16); }
+  56%      { transform: scale(1); }
+}
+
+.love-meter__status {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--fs-base);
+  letter-spacing: 0.04em;
+  color: var(--color-white-soft);
+}
+
+/* Neon progress bar */
+.love-meter__bar-track {
+  width: 100%;
+  max-width: 380px;
+  height: 14px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border);
+  overflow: hidden;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.love-meter__bar-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, var(--color-royal) 0%, var(--color-royal-glow) 55%, var(--color-pink) 100%);
+  box-shadow: 0 0 18px rgba(96, 165, 250, 0.85), 0 0 30px rgba(255, 126, 182, 0.5);
+  transition: width 0.15s linear; /* smooths the stepped JS updates without lagging behind them */
+}
+
+.love-meter__percentage {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--fs-2xl);
+  color: var(--color-white);
+  text-shadow: 0 0 18px rgba(96, 165, 250, 0.6);
+  font-variant-numeric: tabular-nums;
+}
+
+/* At 100%, the bar and icon flare hotter to sell "overloaded" just before
+   the error reveal. */
+.love-meter__card.is-maxed .love-meter__bar-fill {
+  box-shadow: 0 0 28px rgba(255, 126, 182, 0.9), 0 0 45px rgba(251, 191, 36, 0.6);
+}
+
+.love-meter__card.is-maxed .love-meter__pulse-icon {
+  animation-duration: 0.6s;
+  color: var(--color-gold);
+  text-shadow: 0 0 24px rgba(251, 191, 36, 0.8);
+}
+
+/* ---- Glitch shake, played once right as the result reveals -------------- */
+.love-meter__card.is-glitching {
+  animation: glitch-shake 0.4s steps(2, end) 2;
+}
+
+@keyframes glitch-shake {
+  0%   { transform: translateX(0); }
+  25%  { transform: translateX(-4px); }
+  50%  { transform: translateX(4px); }
+  75%  { transform: translateX(-2px); }
+  100% { transform: translateX(0); }
+}
+
+/* ---- Result: the "error" reveal ------------------------------------------ */
+.love-meter__result {
+  position: relative;
+  z-index: 1;
+  margin-top: var(--space-5);
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: opacity 0.5s var(--ease-luxury);
+}
+
+.love-meter__result.is-visible {
+  opacity: 1;
+  height: auto;
+  margin-top: var(--space-5);
+}
+
+.love-meter__error {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--fs-xl);
+  letter-spacing: 0.08em;
+  color: #f87171; /* a deliberate one-off red — the joke needs a real "error" red */
+  text-shadow: 0 0 16px rgba(248, 113, 113, 0.6);
+}
+
+.love-meter__error-sub {
+  margin-top: var(--space-2);
+  font-family: var(--font-script);
+  font-size: var(--fs-script);
+  color: var(--color-gold-soft);
+}
+
+/* ---- Responsive ------------------------------------------------------------ */
+@media (max-width: 480px) {
+  .love-meter__card { padding: var(--space-6) var(--space-4); }
+  .love-meter__pulse-icon { font-size: 2.25rem; }
+  .love-meter__percentage { font-size: var(--fs-xl); }
+}
