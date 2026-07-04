@@ -320,8 +320,38 @@
       </div>
     </section>
 
-    <!-- 6. Scratch Card          -->  <!-- <section id="scratch-card" class="scratch-card section scene">…</section> -->
-    <!-- 7. Quiz About Us         -->  <!-- <section id="quiz" class="quiz section scene">…</section> -->
+
+    <!-- ==========================================================
+         7. HOW WELL DO YOU KNOW US? (QUIZ)
+         Questions generated entirely from the QUESTIONS array in
+         js/sections/quiz.js — edit that array to write your own
+         relationship trivia; nothing here needs to change.
+         ========================================================== -->
+    <section id="quiz" class="quiz section scene" aria-label="How well do you know us quiz">
+      <div class="quiz__header">
+        <p class="eyebrow">Relationship Trivia</p>
+        <h2 class="quiz__title">How Well Do You Know Us? <span aria-hidden="true">🧠💙</span></h2>
+      </div>
+
+      <div class="quiz__hearts" aria-hidden="true"></div>
+
+      <div class="quiz__panel">
+        <div class="quiz__meta">
+          <div class="quiz__progress-track">
+            <div class="quiz__progress-fill" id="quiz-progress-fill"></div>
+          </div>
+          <div class="quiz__meta-row">
+            <span class="quiz__question-count" id="quiz-question-count">Question 1</span>
+            <span class="quiz__score" id="quiz-score">Score: 0</span>
+          </div>
+        </div>
+
+        <div class="quiz__card-stage" id="quiz-card-stage">
+          <!-- quiz.js populates this with one question card at a time -->
+        </div>
+      </div>
+    </section>
+
     <!-- 8. Our Love Scorecard    -->  <!-- <section id="scorecard" class="scorecard section scene">…</section> -->
     <!-- 9. Surprise Gift         -->  <!-- <section id="gift" class="gift section scene">…</section> -->
     <!-- 10. Celebration          -->  <!-- <section id="celebration" class="celebration section scene">…</section> -->
@@ -356,6 +386,7 @@
   <script src="js/sections/gallery.js"></script>
   <script src="js/sections/reasons.js"></script>
   <script src="js/sections/love-meter.js"></script>
+  <script src="js/sections/quiz.js"></script>
 
 </body>
 </html>
