@@ -1,0 +1,59 @@
+/* ==========================================================================
+   SCENE-TRANSITIONS.CSS
+   Story-driven cross-fade layer, applied on top of every top-level
+   section marked `.scene` (Welcome, Gallery, Reasons, and every section
+   we add after this). This is intentionally separate from each section's
+   own internal animations (AOS on gallery cards, the timed reveal on
+   reason cards, GSAP on the welcome hero) — those are "micro" animations
+   for content *within* a scene; this is the "macro" cinematic hand-off
+   *between* scenes as the story scrolls forward.
+
+   Three states, toggled by js/scene-transitions.js:
+     .is-entering  → default resting state before a scene has been reached
+                     (invisible, receded back, slightly blurred)
+     .is-active    → the scene currently "in focus" (fully clear)
+     .is-receded   → a scene the story has moved past (dimmed + blurred,
+                     as if fading into memory rather than fully gone)
+   ========================================================================== */
+
+.scene {
+  transition:
+    opacity 1.1s var(--ease-luxury),
+    filter 1.1s var(--ease-luxury),
+    transform 1.1s var(--ease-luxury);
+}
+
+.scene.is-entering {
+  opacity: 0;
+  filter: blur(10px);
+  transform: scale(0.96) translateY(50px);
+}
+
+.scene.is-active {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1) translateY(0);
+}
+
+/* Dimmed, softly blurred — legible if the person scrolls back up, but
+   visually "past" so attention reads as moving forward through the story. */
+.scene.is-receded {
+  opacity: 0.4;
+  filter: blur(3px);
+  transform: scale(0.985);
+}
+
+/* Reduced-motion: skip the blur/scale entirely (both can be uncomfortable
+   for motion-sensitive users) and just show every scene at full clarity —
+   base.css's global reduced-motion rule already collapses the transition
+   duration to ~0, so this only needs to guarantee the *resting* state
+   never leaves a scene invisible. */
+@media (prefers-reduced-motion: reduce) {
+  .scene,
+  .scene.is-entering,
+  .scene.is-receded {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}

@@ -90,8 +90,13 @@
          `loadingComplete`. "Open Your Surprise" triggers confetti,
          a balloon burst, starts the music, and smooth-scrolls into
          whatever section comes next.
+
+         Marked as a .scene with data-scene-skip-entrance because it
+         already has its own bespoke GSAP entrance timeline — it still
+         participates in the cinematic "recede" once you scroll past
+         it into the Gallery (see scene-transitions.js).
          ========================================================== -->
-    <section id="welcome" class="welcome" aria-label="Welcome">
+    <section id="welcome" class="welcome scene" data-scene-skip-entrance="true" aria-label="Welcome">
 
       <!-- particles.js mounts its canvas into this div -->
       <div id="particles-js" class="welcome__particles" aria-hidden="true"></div>
@@ -126,8 +131,11 @@
          Captions are placeholder text; edit freely in the markup below.
          If an image fails to load, gallery.js swaps in a calm
          placeholder icon instead of a broken-image glyph.
+
+         Marked as a .scene — dissolves into focus on first scroll-in,
+         recedes once you've scrolled past it (see scene-transitions.js).
          ========================================================== -->
-    <section id="gallery" class="gallery section" aria-label="Photo gallery">
+    <section id="gallery" class="gallery section scene" aria-label="Photo gallery">
       <div class="gallery__header">
         <p class="eyebrow">Captured Moments</p>
         <h2 class="gallery__title">Our Beautiful Memories</h2>
@@ -259,8 +267,11 @@
          Cards are generated entirely from the REASONS array in
          js/sections/reasons.js — edit that array to add/remove/
          reorder reasons; nothing here needs to change.
+
+         Marked as a .scene — same cinematic dissolve/recede treatment
+         as Gallery.
          ========================================================== -->
-    <section id="reasons" class="reasons section" aria-label="Reasons why I love you">
+    <section id="reasons" class="reasons section scene" aria-label="Reasons why I love you">
       <div class="reasons__header">
         <p class="eyebrow">In No Particular Order</p>
         <h2 class="reasons__title">20 Reasons Why I Love You <span aria-hidden="true">❤️</span></h2>
@@ -269,13 +280,21 @@
         <!-- reasons.js populates this -->
       </div>
     </section>
-    <!-- 5. Love Meter            -->  <!-- <section id="love-meter">…</section> -->
-    <!-- 6. Scratch Card          -->  <!-- <section id="scratch-card">…</section> -->
-    <!-- 7. Quiz About Us         -->  <!-- <section id="quiz">…</section> -->
-    <!-- 8. Our Love Scorecard    -->  <!-- <section id="scorecard">…</section> -->
-    <!-- 9. Surprise Gift         -->  <!-- <section id="gift">…</section> -->
-    <!-- 10. Celebration          -->  <!-- <section id="celebration">…</section> -->
-    <!-- 11. Final Page           -->  <!-- <section id="final">…</section> -->
+
+    <!-- ==========================================================
+         Remaining sections — build each with class="scene" on its
+         <section> so it participates in the cinematic cross-fade
+         (see css/scene-transitions.css + js/scene-transitions.js).
+         No JS registration needed per-section — SceneTransitions
+         auto-discovers every .scene element on the page.
+         ========================================================== -->
+    <!-- 5. Love Meter            -->  <!-- <section id="love-meter" class="love-meter section scene">…</section> -->
+    <!-- 6. Scratch Card          -->  <!-- <section id="scratch-card" class="scratch-card section scene">…</section> -->
+    <!-- 7. Quiz About Us         -->  <!-- <section id="quiz" class="quiz section scene">…</section> -->
+    <!-- 8. Our Love Scorecard    -->  <!-- <section id="scorecard" class="scorecard section scene">…</section> -->
+    <!-- 9. Surprise Gift         -->  <!-- <section id="gift" class="gift section scene">…</section> -->
+    <!-- 10. Celebration          -->  <!-- <section id="celebration" class="celebration section scene">…</section> -->
+    <!-- 11. Final Page           -->  <!-- <section id="final" class="final section scene">…</section> -->
 
   </main>
 
@@ -293,16 +312,18 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
 
   <!-- ==========================================================
-       APP SCRIPTS — load order matters: aurora + main are core,
-       then one script per section, appended here as we build them.
+       APP SCRIPTS — load order matters: aurora + effects + main +
+       scene-transitions are core/global, then one script per
+       section, appended here as we build them.
        ========================================================== -->
   <script src="js/aurora.js"></script>
   <script src="js/utils/effects.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/scene-transitions.js"></script>
   <script src="js/sections/loading.js"></script>
   <script src="js/sections/welcome.js"></script>
   <script src="js/sections/gallery.js"></script>
-    <script src="js/sections/reasons.js"></script>
+  <script src="js/sections/reasons.js"></script>
 
 </body>
 </html>
