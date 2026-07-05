@@ -28,6 +28,9 @@
   <!-- Final Chapter section styles -->
   <link rel="stylesheet" href="css/final.css" />
 
+  <!-- Background music consent + player styles -->
+  <link rel="stylesheet" href="css/music.css" />
+
   <!-- Favicon (add a small heart/crown icon at assets/icons/favicon.png) -->
   <link rel="icon" href="assets/icons/favicon.png" type="image/png" />
 </head>
@@ -42,14 +45,67 @@
 
   <!-- ==========================================================
        BACKGROUND MUSIC
-       Autoplay-blocked by browsers until user interacts (handled
-       in the Loading Screen section, which starts playback on
-       the "enter" interaction). Add the real track at:
+       Autoplay-blocked by browsers until user interacts. Playback
+       is now gated behind an explicit consent popup and controlled
+       by js/music.js (mute/unmute, volume, floating player, and
+       remembering the visitor's choice). Add the real track at:
        assets/audio/background-music.mp3
        ========================================================== -->
-  <audio id="bg-music" loop preload="none">
+  <audio id="bg-music" loop preload="auto">
     <source src="assets/audio/background-music.mp3" type="audio/mpeg" />
   </audio>
+
+  <!-- ==========================================================
+       MUSIC CONSENT POPUP
+       Shown once (per browser, via localStorage) after the loading
+       screen finishes. Hidden entirely once the visitor answers.
+       ========================================================== -->
+  <div class="music-consent" id="music-consent" role="dialog" aria-modal="true" aria-label="Background music preference">
+    <div class="music-consent__backdrop" id="music-consent-backdrop"></div>
+    <div class="music-consent__card glass-card">
+      <div class="music-consent__notes" aria-hidden="true">
+        <i class="fa-solid fa-music"></i>
+        <i class="fa-solid fa-music"></i>
+        <i class="fa-solid fa-music"></i>
+      </div>
+      <p class="music-consent__title">Would you like to enjoy this journey with music? <span aria-hidden="true">🎵</span></p>
+      <div class="music-consent__actions">
+        <button class="music-consent__btn music-consent__btn--yes" id="music-yes-btn">
+          <span>Yes</span> <span aria-hidden="true">💙</span>
+        </button>
+        <button class="music-consent__btn music-consent__btn--later" id="music-later-btn">Maybe Later</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       FLOATING MUSIC PLAYER
+       A quiet, persistent control (bottom-left) so the visitor can
+       start, mute, or adjust the music at any point after answering
+       the popup — including if they picked "Maybe Later".
+       ========================================================== -->
+  <div class="music-player" id="music-player" aria-label="Music controls">
+    <div class="music-player__ambient" id="music-player-ambient" aria-hidden="true"></div>
+
+    <button class="music-player__toggle" id="music-toggle-btn" aria-label="Open music controls" aria-expanded="false">
+      <i class="fa-solid fa-music" id="music-toggle-icon"></i>
+    </button>
+
+    <div class="music-player__panel glass-card" id="music-panel">
+      <button class="music-player__mute" id="music-mute-btn" aria-label="Mute music">
+        <i class="fa-solid fa-volume-high" id="music-mute-icon"></i>
+      </button>
+      <input
+        type="range"
+        class="music-player__slider"
+        id="music-volume-slider"
+        min="0"
+        max="100"
+        value="60"
+        aria-label="Music volume"
+      />
+    </div>
+  </div>
 
   <!-- ==========================================================
        MAIN CONTENT
@@ -572,6 +628,7 @@
   <script src="js/aurora.js"></script>
   <script src="js/utils/effects.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/music.js"></script>
   <script src="js/scene-transitions.js"></script>
   <script src="js/sections/loading.js"></script>
   <script src="js/sections/welcome.js"></script>
