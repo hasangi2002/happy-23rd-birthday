@@ -1,0 +1,580 @@
+/* ==========================================================
+   FINAL CHAPTER — SECTION 11
+   Self-contained styles for #final. Uses --final-* custom
+   properties (with sane defaults) so this file can drop into
+   the project without depending on unknown globals in main.css.
+   Reuses the shared .glass-card / .btn / .eyebrow / .script-text
+   classes already established elsewhere on the page.
+   ========================================================== */
+
+#final {
+  --final-navy-950: #05070f;
+  --final-navy-900: #070b1a;
+  --final-navy-800: #0c1330;
+  --final-royal-700: #16215c;
+  --final-royal-500: #2a3f9e;
+  --final-blue-glow: #5b7fff;
+  --final-blue-soft: #9db4ff;
+  --final-gold: #f3d9a4;
+  --final-ink: #eef1ff;
+  --final-ink-dim: rgba(238, 241, 255, 0.72);
+
+  --final-font-heading: "Playfair Display", serif;
+  --final-font-body: "Poppins", sans-serif;
+  --final-font-script: "Great Vibes", cursive;
+
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 6rem 1.5rem 5rem;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(91, 127, 255, 0.16), transparent 60%),
+    radial-gradient(ellipse at 15% 85%, rgba(42, 63, 158, 0.28), transparent 55%),
+    linear-gradient(180deg, var(--final-navy-950) 0%, var(--final-navy-900) 35%, var(--final-royal-700) 78%, var(--final-royal-500) 100%);
+  color: var(--final-ink);
+  font-family: var(--final-font-body);
+  text-align: center;
+}
+
+/* ---------- ambient layers ---------- */
+
+#final .final__fireworks {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+#final .final__stars {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1.5px 1.5px at 10% 20%, rgba(255,255,255,0.85), transparent 60%),
+    radial-gradient(1px 1px at 25% 65%, rgba(255,255,255,0.6), transparent 60%),
+    radial-gradient(1.5px 1.5px at 40% 15%, rgba(255,255,255,0.75), transparent 60%),
+    radial-gradient(1px 1px at 55% 80%, rgba(255,255,255,0.55), transparent 60%),
+    radial-gradient(1.5px 1.5px at 70% 35%, rgba(255,255,255,0.8), transparent 60%),
+    radial-gradient(1px 1px at 82% 60%, rgba(255,255,255,0.5), transparent 60%),
+    radial-gradient(1.5px 1.5px at 92% 25%, rgba(255,255,255,0.7), transparent 60%),
+    radial-gradient(1px 1px at 6% 90%, rgba(255,255,255,0.55), transparent 60%),
+    radial-gradient(1.5px 1.5px at 60% 5%, rgba(255,255,255,0.7), transparent 60%);
+  background-repeat: no-repeat;
+  animation: final-twinkle 6s ease-in-out infinite;
+  opacity: 0.6;
+  transition: opacity 1.2s ease;
+}
+
+#final.final--celebrating .final__stars {
+  opacity: 1;
+  animation-duration: 2.6s;
+}
+
+@keyframes final-twinkle {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.9; }
+}
+
+#final .final__hearts,
+#final .final__particles {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+#final .final__floating-heart {
+  position: absolute;
+  bottom: -10%;
+  color: var(--final-blue-glow);
+  opacity: 0.55;
+  filter: drop-shadow(0 0 6px rgba(91, 127, 255, 0.65));
+  animation: final-float-up linear forwards;
+}
+
+#final .final__floating-particle {
+  position: absolute;
+  bottom: -5%;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--final-blue-soft);
+  opacity: 0.5;
+  box-shadow: 0 0 6px 1px rgba(157, 180, 255, 0.7);
+  animation: final-float-up linear forwards;
+}
+
+@keyframes final-float-up {
+  0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.5; }
+  100% { transform: translateY(-115vh) translateX(var(--drift, 20px)) rotate(20deg); opacity: 0; }
+}
+
+/* subtle background heartbeat */
+#final::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 55%, rgba(91, 127, 255, 0.10), transparent 45%);
+  animation: final-heartbeat 2.6s ease-in-out infinite;
+}
+
+@keyframes final-heartbeat {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  15% { transform: scale(1.04); opacity: 0.85; }
+  30% { transform: scale(1); opacity: 0.6; }
+}
+
+/* ---------- content wrapper ---------- */
+
+#final .final__content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.75rem;
+}
+
+/* ---------- Part 1: hero heading ---------- */
+
+#final .final__hero {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+#final .final__eyebrow {
+  color: var(--final-blue-soft);
+  letter-spacing: 0.28em;
+}
+
+#final .final__heading {
+  font-family: var(--final-font-heading);
+  font-weight: 700;
+  font-style: italic;
+  font-size: clamp(2rem, 5.2vw, 3.4rem);
+  line-height: 1.25;
+  margin: 0.5rem 0 0;
+  color: var(--final-ink);
+  text-shadow:
+    0 0 18px rgba(91, 127, 255, 0.55),
+    0 0 42px rgba(91, 127, 255, 0.25);
+  animation: final-glow-pulse 4.5s ease-in-out infinite;
+}
+
+#final .final__heading-accent {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: clamp(1.5rem, 3.6vw, 2.25rem);
+  color: var(--final-gold);
+}
+
+@keyframes final-glow-pulse {
+  0%, 100% { text-shadow: 0 0 18px rgba(91, 127, 255, 0.55), 0 0 42px rgba(91, 127, 255, 0.25); }
+  50% { text-shadow: 0 0 26px rgba(91, 127, 255, 0.8), 0 0 60px rgba(91, 127, 255, 0.4); }
+}
+
+/* ---------- Part 2: typewriter ---------- */
+
+#final .final__typewriter {
+  min-height: 4.5em;
+  font-size: clamp(1rem, 2.4vw, 1.3rem);
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--final-ink-dim);
+  white-space: pre-wrap;
+  opacity: 0;
+}
+
+#final .final__cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  margin-left: 2px;
+  background: var(--final-blue-soft);
+  vertical-align: text-bottom;
+  animation: final-blink 0.85s steps(1) infinite;
+}
+
+@keyframes final-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* ---------- Part 3: note + tissue box ---------- */
+
+#final .final__note-row {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2.5rem;
+}
+
+#final .final__note {
+  flex: 1 1 320px;
+  max-width: 380px;
+  padding: 1.75rem 2rem;
+  text-align: left;
+  transform: translateY(-40px) rotate(-3deg);
+  opacity: 0;
+  border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(5, 7, 15, 0.45);
+}
+
+#final .final__note.script-text p {
+  font-family: var(--final-font-script);
+  font-size: 1.6rem;
+  line-height: 1.5;
+  margin: 0 0 0.15rem;
+  color: var(--final-ink);
+}
+
+#final .final__note.is-placed {
+  animation: final-note-drop 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes final-note-drop {
+  0% { transform: translateY(-40px) rotate(-6deg); opacity: 0; }
+  60% { transform: translateY(4px) rotate(1deg); opacity: 1; }
+  100% { transform: translateY(0) rotate(-1.5deg); opacity: 1; }
+}
+
+#final .final__tissue-wrap {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+#final .final__tissue-wrap.is-visible {
+  animation: final-fade-up 0.8s ease forwards;
+}
+
+#final .final__tissue-box {
+  position: relative;
+  width: 128px;
+  height: 92px;
+  border-radius: 10px;
+  cursor: pointer;
+  background: linear-gradient(155deg, #eef1ff 0%, #c7d2fe 60%, #9db4ff 100%);
+  box-shadow: 0 14px 30px rgba(5, 7, 15, 0.5), inset 0 0 0 2px rgba(255,255,255,0.4);
+  transition: transform 0.25s ease;
+}
+
+#final .final__tissue-box:hover,
+#final .final__tissue-box:focus-visible {
+  transform: translateY(-3px) scale(1.03);
+}
+
+#final .final__tissue-lid {
+  position: absolute;
+  inset: 8px 8px auto 8px;
+  height: 34px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--final-royal-500), var(--final-royal-700));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#final .final__tissue-slot {
+  width: 46px;
+  height: 8px;
+  border-radius: 6px;
+  background: rgba(5, 7, 15, 0.55);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+}
+
+#final .final__tissue-pop {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  width: 42px;
+  height: 30px;
+  border-radius: 6px 6px 10px 10px;
+  background: #ffffff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transform: translate(-50%, 0) scale(0.4);
+  opacity: 0;
+  transform-origin: bottom center;
+  z-index: 2;
+}
+
+#final .final__tissue-box.is-popped .final__tissue-pop {
+  animation: final-tissue-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes final-tissue-pop {
+  0% { transform: translate(-50%, 10px) scale(0.3) rotate(-4deg); opacity: 0; }
+  70% { transform: translate(-50%, -30px) scale(1.05) rotate(3deg); opacity: 1; }
+  100% { transform: translate(-50%, -26px) scale(1) rotate(-2deg); opacity: 1; }
+}
+
+#final .final__tissue-hearts {
+  position: absolute;
+  inset: -20px -20px auto -20px;
+  height: 1px;
+  pointer-events: none;
+}
+
+#final .final__tissue-hearts .final__mini-heart {
+  position: absolute;
+  bottom: 0;
+  color: var(--final-blue-glow);
+  font-size: 0.9rem;
+  opacity: 0.9;
+  animation: final-mini-heart-rise 1.4s ease-out forwards;
+}
+
+@keyframes final-mini-heart-rise {
+  0% { transform: translateY(0) scale(0.6); opacity: 0.9; }
+  100% { transform: translateY(-70px) scale(1); opacity: 0; }
+}
+
+#final .final__tissue-message {
+  font-size: 0.95rem;
+  color: var(--final-blue-soft);
+  min-height: 1.4em;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+#final .final__tissue-message.is-visible {
+  opacity: 1;
+}
+
+/* ---------- Part 4 & 5: letter + signature ---------- */
+
+#final .final__letter-stage {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#final .final__envelope {
+  position: absolute;
+  bottom: 0;
+  width: 220px;
+  height: 140px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+#final .final__envelope-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  background: linear-gradient(160deg, var(--final-royal-500), var(--final-royal-700));
+  box-shadow: 0 20px 40px rgba(5,7,15,0.5);
+}
+
+#final .final__envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: linear-gradient(160deg, var(--final-blue-glow), var(--final-royal-500));
+  clip-path: polygon(0 0, 100% 0, 50% 85%);
+  transform-origin: top center;
+}
+
+#final .final__letter-stage.is-opening .final__envelope {
+  animation: final-envelope-fade 1.4s ease forwards;
+}
+
+#final .final__letter-stage.is-opening .final__envelope-flap {
+  animation: final-flap-open 0.9s ease-in forwards;
+}
+
+@keyframes final-envelope-fade {
+  0% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes final-flap-open {
+  0% { transform: rotateX(0deg); }
+  100% { transform: rotateX(180deg); }
+}
+
+#final .final__letter {
+  position: relative;
+  width: 100%;
+  max-width: 620px;
+  padding: 2.75rem 2.5rem 2.25rem;
+  border-radius: 18px;
+  text-align: left;
+  opacity: 0;
+  transform: translateY(60px) scale(0.96);
+  box-shadow: 0 30px 60px rgba(5, 7, 15, 0.5);
+}
+
+#final .final__letter.is-visible {
+  animation: final-letter-slide 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes final-letter-slide {
+  0% { opacity: 0; transform: translateY(60px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+#final .final__letter-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+#final .final__letter-line {
+  margin: 0;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  line-height: 1.75;
+  color: var(--final-ink-dim);
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+#final .final__letter-line.is-visible {
+  animation: final-fade-up 0.8s ease forwards;
+}
+
+#final .final__letter-line--accent {
+  color: var(--final-gold);
+  font-style: italic;
+}
+
+#final .final__signature {
+  margin: 1.75rem 0 0;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  color: var(--final-blue-soft);
+  text-align: right;
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);
+}
+
+#final .final__signature.is-writing {
+  animation: final-handwrite 1.8s ease forwards;
+}
+
+@keyframes final-handwrite {
+  0% { opacity: 1; clip-path: inset(0 100% 0 0); }
+  100% { opacity: 1; clip-path: inset(0 0 0 0); }
+}
+
+@keyframes final-fade-up {
+  0% { opacity: 0; transform: translateY(14px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Part 7: final button ---------- */
+
+#final .final__replay-btn {
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  font-family: var(--final-font-body);
+  letter-spacing: 0.04em;
+  box-shadow: 0 0 0 rgba(91, 127, 255, 0);
+  transition: transform 0.3s ease, box-shadow 0.4s ease;
+}
+
+#final .final__replay-btn.is-visible {
+  animation: final-fade-up 0.9s ease forwards;
+}
+
+#final .final__replay-btn:hover,
+#final .final__replay-btn:focus-visible {
+  transform: translateY(-2px) scale(1.045);
+  box-shadow: 0 0 32px rgba(91, 127, 255, 0.65);
+}
+
+#final .final__replay-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(0);
+  pointer-events: none;
+  width: 12px;
+  height: 12px;
+}
+
+#final .final__replay-ripple.is-rippling {
+  animation: final-ripple 0.7s ease-out forwards;
+}
+
+@keyframes final-ripple {
+  0% { transform: scale(0); opacity: 0.6; }
+  100% { transform: scale(28); opacity: 0; }
+}
+
+/* full-page fade overlay used when restarting the site */
+.final-restart-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--final-navy-950, #05070f);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.9s ease;
+}
+
+.final-restart-overlay.is-active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  #final * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---------- responsiveness ---------- */
+
+@media (max-width: 640px) {
+  #final {
+    padding: 4.5rem 1.25rem 3.5rem;
+  }
+
+  #final .final__note-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #final .final__note {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  #final .final__letter {
+    padding: 2rem 1.5rem;
+  }
+
+  #final .final__signature {
+    text-align: center;
+  }
+}

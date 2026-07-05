@@ -25,6 +25,9 @@
   <!-- Design system -->
   <link rel="stylesheet" href="css/main.css" />
 
+  <!-- Final Chapter section styles -->
+  <link rel="stylesheet" href="css/final.css" />
+
   <!-- Favicon (add a small heart/crown icon at assets/icons/favicon.png) -->
   <link rel="icon" href="assets/icons/favicon.png" type="image/png" />
 </head>
@@ -448,7 +451,8 @@
         <p class="gift__hint" id="gift-hint">Tap the gift to open it</p>
 
         <div class="gift__reveal" id="gift-reveal">
-          
+          <p class="gift__reveal-title">Virtual Hugs <span aria-hidden="true">🤗</span></p>
+
           <div class="gift__video-frame glass-card">
             <p class="gift__video-caption">Warning: Terrible Kisses Incoming <span aria-hidden="true">😘</span></p>
             <div class="gift__video-embed">
@@ -463,8 +467,85 @@
       </div>
     </section>
 
-    <!-- 10. Celebration          -->  <!-- <section id="celebration" class="celebration section scene">…</section> -->
-    <!-- 11. Final Page           -->  <!-- <section id="final" class="final section scene">…</section> -->
+    <!-- ==========================================================
+         11. FINAL CHAPTER
+         The emotional closing scene: glowing heading, typewriter
+         message, a handwritten "don't cry" note with an interactive
+         tissue box, a glassmorphism letter revealed line by line,
+         a handwritten signature, then a quiet, elegant celebration
+         (fireworks + confetti + hearts + brighter stars) before a
+         single glowing "Replay Our Story" button restarts the whole
+         experience from the loading screen. See js/sections/final.js.
+         ========================================================== -->
+    <section id="final" class="final section scene" aria-label="Final chapter">
+      <canvas id="final-fireworks-canvas" class="final__fireworks" aria-hidden="true"></canvas>
+      <div class="final__stars" aria-hidden="true"></div>
+      <div class="final__hearts" aria-hidden="true"></div>
+      <div class="final__particles" aria-hidden="true"></div>
+
+      <div class="final__content">
+
+        <!-- Part 1 – Grand Final Heading -->
+        <div class="final__hero" id="final-hero">
+          <p class="eyebrow final__eyebrow">The Final Chapter</p>
+          <h2 class="final__heading">
+            Happy 23rd Birthday
+            <span class="final__heading-accent">My Favorite Human <span aria-hidden="true">❤️</span></span>
+          </h2>
+        </div>
+
+        <!-- Part 2 – Typewriter Message -->
+        <p class="final__typewriter" id="final-typewriter">
+          <span id="final-typewriter-text"></span><span class="final__cursor" id="final-cursor" aria-hidden="true"></span>
+        </p>
+
+        <!-- Part 3 – "Don't Cry" Note + Tissue Box -->
+        <div class="final__note-row" id="final-note-row">
+          <div class="final__note glass-card script-text" id="final-note">
+            <p>Hey love...</p>
+            <p>If you're crying right now...</p>
+            <p>Please don't.</p>
+            <p>I don't like seeing tears because of me.</p>
+            <p>Here...</p>
+            <p>Use this tissue. 🤍</p>
+          </div>
+
+          <div class="final__tissue-wrap" id="final-tissue-wrap">
+            <div class="final__tissue-box" id="tissue-box" role="button" tabindex="0" aria-label="Click for a tissue">
+              <div class="final__tissue-pop" id="tissue-pop"></div>
+              <div class="final__tissue-hearts" id="tissue-hearts" aria-hidden="true"></div>
+              <div class="final__tissue-lid">
+                <span class="final__tissue-slot"></span>
+              </div>
+            </div>
+            <p class="final__tissue-message" id="tissue-message">Smile for me... you're much cuter that way. ❤️</p>
+          </div>
+        </div>
+
+        <!-- Part 4 & 5 – Heartfelt Letter + Signature -->
+        <div class="final__letter-stage" id="final-letter-stage">
+          <div class="final__envelope" id="final-envelope" aria-hidden="true">
+            <div class="final__envelope-back"></div>
+            <div class="final__envelope-flap"></div>
+          </div>
+
+          <div class="final__letter glass-card" id="final-letter">
+            <div class="final__letter-lines" id="final-letter-lines">
+              <!-- final.js populates this, paragraph by paragraph -->
+            </div>
+            <p class="final__signature script-text" id="final-signature">
+              With all my love,<br />your most favorite person. 💙
+            </p>
+          </div>
+        </div>
+
+        <!-- Part 7 – Final Button -->
+        <button class="btn btn--glass final__replay-btn" id="final-replay-btn">
+          <span class="final__replay-ripple" aria-hidden="true"></span>
+          <span>Replay Our Story</span> <span aria-hidden="true">❤️</span>
+        </button>
+      </div>
+    </section>
 
   </main>
 
@@ -500,6 +581,7 @@
   <script src="js/sections/quiz.js"></script>
   <script src="js/sections/scorecard.js"></script>
   <script src="js/sections/gift.js"></script>
+  <script src="js/sections/final.js"></script>
 
 </body>
 </html>
