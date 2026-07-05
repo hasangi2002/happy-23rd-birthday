@@ -3,7 +3,7 @@
    Reset, global typography, and reusable primitives.
    Section-specific stylesheets (e.g. loading.css, gallery.css) should
    compose THESE classes rather than reinventing cards/buttons/labels.
-   ========================================================================== */
+   ==========================================================================  */
 
 /* ---- Reset -------------------------------------------------------------- */
 *,
