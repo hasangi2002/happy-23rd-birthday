@@ -352,8 +352,108 @@
       </div>
     </section>
 
-    <!-- 8. Our Love Scorecard    -->  <!-- <section id="scorecard" class="scorecard section scene">…</section> -->
-    <!-- 9. Surprise Gift         -->  <!-- <section id="gift" class="gift section scene">…</section> -->
+    <!-- ==========================================================
+         8. OUR LOVE SCORECARD (CRICKET SCOREBOARD)
+         Wickets/Partnership/Status are static text, revealed purely by
+         the CSS power-on stagger. Runs is the one animated stat —
+         scorecard.js spins it like an odometer before landing on ∞.
+         (Font Awesome has no dedicated cricket-bat icon in the free
+         set, so baseball-bat-ball stands in for the board header.)
+         ========================================================== -->
+    <section id="scorecard" class="scorecard section scene" aria-label="Our love scorecard">
+      <div class="scorecard__header">
+        <p class="eyebrow">Est. Day One</p>
+        <h2 class="scorecard__title">Our Love Scorecard <span aria-hidden="true">🏏</span></h2>
+      </div>
+
+      <div class="scorecard__lights" aria-hidden="true">
+        <div class="scorecard__light scorecard__light--one"></div>
+        <div class="scorecard__light scorecard__light--two"></div>
+        <div class="scorecard__light scorecard__light--three"></div>
+      </div>
+
+      <div class="scorecard__board glass-card" id="scorecard-board">
+        <div class="scorecard__board-title">
+          <i class="fa-solid fa-baseball-bat-ball" aria-hidden="true"></i>
+          <span>Live Scorecard</span>
+          <span class="scorecard__live-dot" aria-hidden="true"></span>
+        </div>
+
+        <div class="scorecard__grid">
+          <div class="scorecard__stat">
+            <i class="fa-solid fa-heart-pulse scorecard__stat-icon" aria-hidden="true"></i>
+            <span class="scorecard__stat-label">Runs</span>
+            <span class="scorecard__stat-value" id="score-runs">0</span>
+          </div>
+          <div class="scorecard__stat">
+            <i class="fa-solid fa-shield scorecard__stat-icon" aria-hidden="true"></i>
+            <span class="scorecard__stat-label">Wickets Lost</span>
+            <span class="scorecard__stat-value" id="score-wickets">0</span>
+          </div>
+          <div class="scorecard__stat">
+            <i class="fa-solid fa-people-arrows scorecard__stat-icon" aria-hidden="true"></i>
+            <span class="scorecard__stat-label">Partnership</span>
+            <span class="scorecard__stat-value" id="score-partnership">Forever</span>
+          </div>
+          <div class="scorecard__stat">
+            <i class="fa-solid fa-circle-check scorecard__stat-icon" aria-hidden="true"></i>
+            <span class="scorecard__stat-label">Status</span>
+            <span class="scorecard__stat-value" id="score-status">Not Out ❤️</span>
+          </div>
+        </div>
+
+        <div class="scorecard__crowd" aria-hidden="true">
+          <span class="scorecard__crowd-dot"></span><span class="scorecard__crowd-dot"></span>
+          <span class="scorecard__crowd-dot"></span><span class="scorecard__crowd-dot"></span>
+          <span class="scorecard__crowd-dot"></span><span class="scorecard__crowd-dot"></span>
+          <span class="scorecard__crowd-dot"></span><span class="scorecard__crowd-dot"></span>
+          <span class="scorecard__crowd-dot"></span><span class="scorecard__crowd-dot"></span>
+          <span class="scorecard__crowd-dot"></span><span class="scorecard__crowd-dot"></span>
+          <span class="scorecard__crowd-dot"></span><span class="scorecard__crowd-dot"></span>
+          <span class="scorecard__crowd-dot"></span><span class="scorecard__crowd-dot"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         9. SURPRISE GIFT
+         Layered-div gift box (not an image) so the ribbon can glow
+         and the lid can genuinely animate open — see gift.js.
+         ========================================================== -->
+    <section id="gift" class="gift section scene" aria-label="Surprise gift">
+      <div class="gift__header">
+        <p class="eyebrow">One More Thing</p>
+        <h2 class="gift__title">Your Surprise Gift <span aria-hidden="true">🎁</span></h2>
+      </div>
+
+      <div class="gift__hearts" aria-hidden="true"></div>
+
+      <div class="gift__stage">
+        <div class="gift__box" id="gift-box" role="button" tabindex="0" aria-label="Click to open your gift">
+          <div class="gift__lid">
+            <div class="gift__ribbon-v"></div>
+            <div class="gift__bow">
+              <span class="gift__bow-loop gift__bow-loop--left"></span>
+              <span class="gift__bow-loop gift__bow-loop--right"></span>
+              <span class="gift__bow-knot"></span>
+            </div>
+          </div>
+          <div class="gift__base">
+            <div class="gift__ribbon-v"></div>
+            <div class="gift__ribbon-h"></div>
+          </div>
+          <div class="gift__glow" aria-hidden="true"></div>
+        </div>
+
+        <p class="gift__hint" id="gift-hint">Tap the gift to open it</p>
+
+        <div class="gift__reveal" id="gift-reveal">
+          <p class="gift__reveal-title">Virtual Hugs <span aria-hidden="true">🤗</span></p>
+          <p class="gift__reveal-subtitle">Your Real Gift Is Waiting...</p>
+        </div>
+      </div>
+    </section>
+
     <!-- 10. Celebration          -->  <!-- <section id="celebration" class="celebration section scene">…</section> -->
     <!-- 11. Final Page           -->  <!-- <section id="final" class="final section scene">…</section> -->
 
@@ -387,6 +487,8 @@
   <script src="js/sections/reasons.js"></script>
   <script src="js/sections/love-meter.js"></script>
   <script src="js/sections/quiz.js"></script>
+  <script src="js/sections/scorecard.js"></script>
+  <script src="js/sections/gift.js"></script>
 
 </body>
 </html>

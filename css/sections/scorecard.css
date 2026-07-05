@@ -1,0 +1,230 @@
+/* ==========================================================================
+   SECTIONS/SCORECARD.CSS
+   Section 8 — Our Love Scorecard (Cricket Scoreboard)
+   A stadium-scoreboard styled panel: dark LED-bezel background, glowing
+   blue digital-style stats, floodlight beams overhead, and a "crowd
+   lights" strip along the bottom. The board "powers on" with a flicker
+   the first time it scrolls into view (see scorecard.js).
+   ========================================================================== */
+
+.scorecard {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.scorecard__header {
+  margin-bottom: var(--space-6);
+}
+
+/* ---- Stadium floodlights -------------------------------------------------
+   Three cone-shaped light beams shining down from above the board,
+   gently swaying — same "slow moving glow" language as the Welcome hero,
+   reused here for a stadium-at-night feel. */
+.scorecard__lights {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.scorecard__light {
+  position: absolute;
+  top: -10%;
+  width: 220px;
+  height: 420px;
+  background: linear-gradient(180deg, rgba(147, 197, 253, 0.35) 0%, transparent 75%);
+  clip-path: polygon(45% 0%, 55% 0%, 100% 100%, 0% 100%);
+  opacity: 0.6;
+  animation: light-sway 6s ease-in-out infinite alternate;
+}
+
+.scorecard__light--one   { left: 8%;  animation-delay: 0s; }
+.scorecard__light--two   { left: 42%; animation-delay: 1.2s; transform: rotate(2deg); }
+.scorecard__light--three { right: 8%; animation-delay: 0.6s; transform: rotate(-4deg); }
+
+@keyframes light-sway {
+  from { transform: rotate(-3deg); opacity: 0.45; }
+  to   { transform: rotate(3deg); opacity: 0.7; }
+}
+
+/* ---- Scoreboard panel ------------------------------------------------- */
+.scorecard__board {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin-inline: auto;
+  padding: var(--space-6) var(--space-5) var(--space-5);
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 4px),
+    linear-gradient(180deg, #0b1225 0%, #050810 100%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card), var(--shadow-glow-royal);
+}
+
+.scorecard__board-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-royal-glow);
+  margin-bottom: var(--space-5);
+}
+
+.scorecard__live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-pink);
+  box-shadow: 0 0 10px rgba(255, 126, 182, 0.9);
+  animation: live-blink 1.4s ease-in-out infinite;
+}
+
+@keyframes live-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.25; }
+}
+
+/* ---- Stat grid ---------------------------------------------------------- */
+.scorecard__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+.scorecard__stat {
+  padding: var(--space-4) var(--space-2);
+  border-radius: var(--radius-md);
+  background: rgba(37, 99, 235, 0.08);
+  border: 1px solid rgba(96, 165, 250, 0.2);
+  opacity: 0; /* powers on via .is-live, staggered per stat below */
+}
+
+.scorecard__stat-icon {
+  font-size: 1.1rem;
+  margin-bottom: var(--space-1);
+}
+
+.scorecard__stat-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-white-soft);
+  opacity: 0.75;
+  margin-bottom: var(--space-1);
+}
+
+.scorecard__stat-value {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 700;
+  font-size: var(--fs-lg);
+  color: var(--color-white);
+  text-shadow: 0 0 14px rgba(96, 165, 250, 0.75);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Brief flash right as the Runs odometer overflows into ∞ */
+.scorecard__stat-value.is-glitching {
+  animation: value-glitch 0.35s steps(2, end) 2;
+}
+
+@keyframes value-glitch {
+  0%   { transform: translate(0, 0); color: var(--color-gold-soft); }
+  50%  { transform: translate(2px, -1px); }
+  100% { transform: translate(0, 0); color: var(--color-white); }
+}
+
+/* The board "powers on" — each stat flickers to life in sequence rather
+   than all four appearing at once. Delays are set per-cell below. */
+.scorecard__board.is-live .scorecard__stat {
+  animation: stat-power-on 1s steps(6, end) forwards;
+}
+
+.scorecard__board.is-live .scorecard__stat:nth-child(1) { animation-delay: 0s; }
+.scorecard__board.is-live .scorecard__stat:nth-child(2) { animation-delay: 0.35s; }
+.scorecard__board.is-live .scorecard__stat:nth-child(3) { animation-delay: 0.7s; }
+.scorecard__board.is-live .scorecard__stat:nth-child(4) { animation-delay: 1.05s; }
+
+@keyframes stat-power-on {
+  0%   { opacity: 0; }
+  15%  { opacity: 1; }
+  25%  { opacity: 0.2; }
+  40%  { opacity: 1; }
+  55%  { opacity: 0.4; }
+  70%  { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+/* Gentle ongoing glow pulse once lit, so the board still feels "live" */
+.scorecard__board.is-live .scorecard__stat {
+  animation: stat-power-on 1s steps(6, end) forwards, stat-glow-pulse 3.5s ease-in-out 1.2s infinite;
+}
+
+@keyframes stat-glow-pulse {
+  0%, 100% { box-shadow: none; }
+  50%      { box-shadow: 0 0 22px rgba(37, 99, 235, 0.25); }
+}
+
+/* ---- Crowd lights strip --------------------------------------------------
+   A row of small dots along the bottom of the board, twinkling in
+   palette colors like distant stadium crowd lights / phone flashlights. */
+.scorecard__crowd {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: var(--space-5);
+  flex-wrap: wrap;
+}
+
+.scorecard__crowd-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-royal-glow);
+  opacity: 0.4;
+  animation: crowd-twinkle 2.2s ease-in-out infinite;
+}
+
+.scorecard__crowd-dot:nth-child(3n)   { background: var(--color-gold); animation-duration: 1.8s; }
+.scorecard__crowd-dot:nth-child(5n)   { background: var(--color-pink); animation-duration: 2.6s; }
+.scorecard__crowd-dot:nth-child(2n)   { animation-delay: 0.3s; }
+.scorecard__crowd-dot:nth-child(4n+1) { animation-delay: 0.7s; }
+
+@keyframes crowd-twinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.85); }
+  50%      { opacity: 1; transform: scale(1.15); }
+}
+
+/* One-off celebration cheer, spawned by scorecard.js when the board
+   first powers on — small emoji rising and fading, like a crowd cheer. */
+.scorecard__cheer {
+  position: absolute;
+  bottom: 10%;
+  font-size: 1.1rem;
+  opacity: 0;
+  pointer-events: none;
+  animation: cheer-rise 2.2s ease-out forwards;
+}
+
+@keyframes cheer-rise {
+  0%   { transform: translateY(0) scale(0.8); opacity: 0; }
+  15%  { opacity: 1; }
+  100% { transform: translateY(-90px) scale(1.1); opacity: 0; }
+}
+
+/* ---- Responsive ------------------------------------------------------------ */
+@media (max-width: 480px) {
+  .scorecard__grid { grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+  .scorecard__stat-value { font-size: var(--fs-base); }
+  .scorecard__light { width: 140px; }
+}

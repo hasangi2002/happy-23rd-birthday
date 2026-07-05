@@ -1,0 +1,243 @@
+/* ==========================================================================
+   SECTIONS/GIFT.CSS
+   Section 9 — Surprise Gift
+   A gift box built from layered divs (lid + base + ribbon + bow) rather
+   than a flat image, so the ribbon can glow and the lid can genuinely
+   "pop open" on click. gift.js toggles .is-open, which drives the lid
+   flying off, a glow burst, and the reveal text sliding into view.
+   ========================================================================== */
+
+.gift {
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+}
+
+.gift__header {
+  margin-bottom: var(--space-6);
+}
+
+/* Ambient floating hearts behind the whole section */
+.gift__hearts {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.gift__stage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  perspective: 900px;
+}
+
+/* ---- The box ------------------------------------------------------------- */
+.gift__box {
+  position: relative;
+  width: 190px;
+  height: 170px;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  animation: gift-invite 2.6s ease-in-out infinite;
+}
+
+.gift__box:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 6px;
+  border-radius: var(--radius-md);
+}
+
+/* A gentle bounce + tilt inviting a click, before it's been opened */
+@keyframes gift-invite {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50%      { transform: translateY(-8px) rotate(1deg); }
+}
+
+.gift__box.is-open {
+  animation: none; /* settle once opened — no more inviting bounce needed */
+}
+
+.gift__base {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 62%;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--color-royal) 0%, #1e3a8a 100%);
+  box-shadow: var(--shadow-card);
+  transition: transform 0.5s var(--ease-luxury);
+}
+
+.gift__box.is-open .gift__base {
+  transform: scale(0.97);
+}
+
+.gift__lid {
+  position: absolute;
+  top: 22%;
+  left: -4%;
+  width: 108%;
+  height: 22%;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--color-royal-light) 0%, var(--color-royal) 100%);
+  box-shadow: var(--shadow-card);
+  transform-origin: bottom center;
+  transition: transform 0.7s var(--ease-bounce), opacity 0.6s var(--ease-luxury) 0.1s;
+  z-index: 2;
+}
+
+/* The lid pops up and tips backward off the box, like it's been flung open */
+.gift__box.is-open .gift__lid {
+  transform: translateY(-90px) rotateX(-70deg) rotateZ(-8deg);
+  opacity: 0;
+}
+
+/* ---- Ribbon --------------------------------------------------------------
+   A continuous vertical strip runs down the lid and base; a horizontal
+   strip crosses the base. Both glow — this is the section's signature
+   "glowing ribbon" ambience, running whether or not the box is open. */
+.gift__ribbon-v {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 22%;
+  height: 100%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, var(--color-gold-soft) 0%, var(--color-gold) 100%);
+  animation: ribbon-glow 2.2s ease-in-out infinite;
+}
+
+.gift__ribbon-h {
+  position: absolute;
+  top: 38%;
+  left: 0;
+  width: 100%;
+  height: 22%;
+  background: linear-gradient(90deg, var(--color-gold-soft) 0%, var(--color-gold) 100%);
+  animation: ribbon-glow 2.2s ease-in-out infinite;
+  animation-delay: 0.3s;
+}
+
+@keyframes ribbon-glow {
+  0%, 100% { box-shadow: 0 0 10px rgba(251, 191, 36, 0.5); }
+  50%      { box-shadow: 0 0 22px rgba(251, 191, 36, 0.9); }
+}
+
+/* ---- Bow, sitting on top of the lid --------------------------------------- */
+.gift__bow {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  width: 60px;
+  height: 34px;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+
+.gift__bow-loop {
+  position: absolute;
+  top: 0;
+  width: 30px;
+  height: 26px;
+  border-radius: 50% 50% 50% 0;
+  background: linear-gradient(135deg, var(--color-gold-soft), var(--color-gold));
+  box-shadow: 0 0 14px rgba(251, 191, 36, 0.7);
+}
+
+.gift__bow-loop--left  { left: 0; transform: rotate(-25deg); }
+.gift__bow-loop--right { right: 0; transform: rotate(25deg) scaleX(-1); }
+
+.gift__bow-knot {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: var(--color-gold);
+  box-shadow: 0 0 10px rgba(251, 191, 36, 0.8);
+}
+
+/* Bow flies off along with the lid when opened */
+.gift__box.is-open .gift__bow {
+  transition: transform 0.7s var(--ease-bounce), opacity 0.6s var(--ease-luxury);
+  transform: translateX(-50%) translateY(-90px) rotate(25deg);
+  opacity: 0;
+}
+
+/* ---- Glow burst, played once at the moment of opening ---------------------- */
+.gift__glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.9) 0%, rgba(37, 99, 235, 0.5) 45%, transparent 75%);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.gift__box.is-open .gift__glow {
+  animation: glow-burst 0.8s ease-out forwards;
+}
+
+@keyframes glow-burst {
+  0%   { transform: translate(-50%, -50%) scale(0); opacity: 0.9; }
+  100% { transform: translate(-50%, -50%) scale(9); opacity: 0; }
+}
+
+/* ---- Hint + reveal ---------------------------------------------------------- */
+.gift__hint {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  color: var(--color-white-soft);
+  opacity: 0.8;
+  transition: opacity 0.5s var(--ease-luxury);
+}
+
+.gift__hint.is-hidden {
+  opacity: 0;
+}
+
+.gift__reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s var(--ease-luxury), transform 0.7s var(--ease-luxury);
+}
+
+.gift__reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gift__reveal-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 700;
+  font-size: var(--fs-xl);
+  color: var(--color-white);
+  margin-bottom: var(--space-2);
+}
+
+.gift__reveal-subtitle {
+  font-family: var(--font-script);
+  font-size: var(--fs-script);
+  color: var(--color-gold-soft);
+}
+
+/* ---- Responsive -------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .gift__box { width: 150px; height: 135px; }
+  .gift__bow { width: 48px; height: 28px; top: -18px; }
+  .gift__bow-loop { width: 24px; height: 20px; }
+}
