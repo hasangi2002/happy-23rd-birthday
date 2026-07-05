@@ -229,6 +229,33 @@
   margin-bottom: var(--space-2);
 }
 
+/* ---- The Tenor GIF frame --------------------------------------------------
+   embed.js (loaded in index.html) converts .tenor-gif-embed into an
+   iframe at runtime, sized by data-width="100%" — this wrapper just
+   gives it a consistent, on-brand frame (rounded, glass, capped width)
+   instead of letting it render at whatever raw size Tenor picks. */
+.gift__video-frame {
+  width: min(220px, 70vw);
+  margin: var(--space-3) auto;
+  padding: var(--space-3);
+  overflow: hidden;
+}
+
+.gift__video-caption {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--fs-xs);
+  letter-spacing: 0.03em;
+  color: var(--color-gold-soft);
+  margin-bottom: var(--space-2);
+}
+
+.gift__video-embed {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  line-height: 0; /* avoids a stray gap under the injected iframe */
+}
+
 .gift__reveal-subtitle {
   font-family: var(--font-script);
   font-size: var(--fs-script);
