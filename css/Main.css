@@ -8,7 +8,8 @@
 @import url('variables.css');
 @import url('base.css');
 @import url('scene-transitions.css');
-@import url('musics.css');
+@import url('music.css');
+@import url('premium.css');
 
 /* Section stylesheets will be appended below as we build them,*/
    @import url('sections/loading.css');

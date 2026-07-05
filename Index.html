@@ -23,18 +23,24 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css" />
 
   <!-- Design system -->
+  <!-- main.css now imports variables/base/scene-transitions/musics/premium
+       plus every section stylesheet (including sections/final.css) —
+       no separate <link> tags needed for those anymore. -->
   <link rel="stylesheet" href="css/main.css" />
-
-  <!-- Final Chapter section styles -->
-  <link rel="stylesheet" href="css/final.css" />
-
-  <!-- Background music consent + player styles -->
-  <link rel="stylesheet" href="css/music.css" />
 
   <!-- Favicon (add a small heart/crown icon at assets/icons/favicon.png) -->
   <link rel="icon" href="assets/icons/favicon.png" type="image/png" />
 </head>
 <body class="is-loading">
+
+  <!-- ==========================================================
+       SCROLL PROGRESS INDICATOR
+       Thin fixed bar at the very top of the viewport; filled by
+       js/premium.js as the visitor scrolls through the page.
+       ========================================================== -->
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true">
+    <div class="scroll-progress__fill" id="scroll-progress-fill"></div>
+  </div>
 
   <!-- ==========================================================
        SIGNATURE AMBIENT LAYER
@@ -195,7 +201,7 @@
          recedes once you've scrolled past it (see scene-transitions.js).
          ========================================================== -->
     <section id="gallery" class="gallery section scene" aria-label="Photo gallery">
-      <div class="gallery__header">
+      <div class="gallery__header" data-reveal>
         <p class="eyebrow">Captured Moments</p>
         <h2 class="gallery__title">Our Beautiful Memories</h2>
       </div>
@@ -331,7 +337,7 @@
          as Gallery.
          ========================================================== -->
     <section id="reasons" class="reasons section scene" aria-label="Reasons why I love you">
-      <div class="reasons__header">
+      <div class="reasons__header" data-reveal>
         <p class="eyebrow">In No Particular Order</p>
         <h2 class="reasons__title">20 Reasons Why I Love You <span aria-hidden="true">❤️</span></h2>
       </div>
@@ -354,12 +360,12 @@
          the "Maximum Capacity Reached" result.
          ========================================================== -->
     <section id="love-meter" class="love-meter section scene" aria-label="Love meter">
-      <div class="love-meter__header">
+      <div class="love-meter__header" data-reveal>
         <p class="eyebrow">Scientifically Proven</p>
         <h2 class="love-meter__title">Love Meter <span aria-hidden="true">❤️</span></h2>
       </div>
 
-      <div class="love-meter__card glass-card">
+      <div class="love-meter__card glass-card glass-card--interactive" data-reveal data-reveal-delay="120">
         <div class="love-meter__hearts" aria-hidden="true"></div>
         <div class="love-meter__sparkles" aria-hidden="true"></div>
 
@@ -387,14 +393,14 @@
          relationship trivia; nothing here needs to change.
          ========================================================== -->
     <section id="quiz" class="quiz section scene" aria-label="How well do you know us quiz">
-      <div class="quiz__header">
+      <div class="quiz__header" data-reveal>
         <p class="eyebrow">Relationship Trivia</p>
         <h2 class="quiz__title">How Well Do You Know Us? <span aria-hidden="true">🧠💙</span></h2>
       </div>
 
       <div class="quiz__hearts" aria-hidden="true"></div>
 
-      <div class="quiz__panel">
+      <div class="quiz__panel" data-reveal data-reveal-delay="120">
         <div class="quiz__meta">
           <div class="quiz__progress-track">
             <div class="quiz__progress-fill" id="quiz-progress-fill"></div>
@@ -420,7 +426,7 @@
          set, so baseball-bat-ball stands in for the board header.)
          ========================================================== -->
     <section id="scorecard" class="scorecard section scene" aria-label="Our love scorecard">
-      <div class="scorecard__header">
+      <div class="scorecard__header" data-reveal>
         <p class="eyebrow">Est. Day One</p>
         <h2 class="scorecard__title">Our Love Scorecard <span aria-hidden="true">🏏</span></h2>
       </div>
@@ -431,7 +437,7 @@
         <div class="scorecard__light scorecard__light--three"></div>
       </div>
 
-      <div class="scorecard__board glass-card" id="scorecard-board">
+      <div class="scorecard__board glass-card glass-card--interactive" id="scorecard-board" data-reveal data-reveal-delay="120">
         <div class="scorecard__board-title">
           <i class="fa-solid fa-baseball-bat-ball" aria-hidden="true"></i>
           <span>Live Scorecard</span>
@@ -480,14 +486,14 @@
          and the lid can genuinely animate open — see gift.js.
          ========================================================== -->
     <section id="gift" class="gift section scene" aria-label="Surprise gift">
-      <div class="gift__header">
+      <div class="gift__header" data-reveal>
         <p class="eyebrow">One More Thing</p>
         <h2 class="gift__title">Your Surprise Gift <span aria-hidden="true">🎁</span></h2>
       </div>
 
       <div class="gift__hearts" aria-hidden="true"></div>
 
-      <div class="gift__stage">
+      <div class="gift__stage" data-reveal data-reveal-delay="120">
         <div class="gift__box" id="gift-box" role="button" tabindex="0" aria-label="Click to open your gift">
           <div class="gift__lid">
             <div class="gift__ribbon-v"></div>
@@ -596,7 +602,7 @@
         </div>
 
         <!-- Part 7 – Final Button -->
-        <button class="btn btn--glass final__replay-btn" id="final-replay-btn">
+        <button class="btn btn--glass final__replay-btn" id="final-replay-btn" data-no-ripple>
           <span class="final__replay-ripple" aria-hidden="true"></span>
           <span>Replay Our Story</span> <span aria-hidden="true">❤️</span>
         </button>
@@ -628,6 +634,7 @@
   <script src="js/aurora.js"></script>
   <script src="js/utils/effects.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/premium.js"></script>
   <script src="js/music.js"></script>
   <script src="js/scene-transitions.js"></script>
   <script src="js/sections/loading.js"></script>

@@ -1,0 +1,253 @@
+/* ==========================================================
+   PREMIUM GLOBAL ENHANCEMENTS
+   Site-wide layer: smooth scrolling, scroll progress, cursor
+   glow, button ripple, floating particles, section reveals,
+   glassmorphism polish, and the heart back-to-top button.
+   Loaded after css/main.css so it can safely enhance shared
+   classes (.glass-card, .btn, .back-to-top) without fighting
+   section-specific stylesheets that load after it.
+   ========================================================== */
+
+:root {
+  --premium-navy-950: #05070f;
+  --premium-royal-500: #2a3f9e;
+  --premium-royal-700: #16215c;
+  --premium-blue-glow: #5b7fff;
+  --premium-blue-soft: #9db4ff;
+  --premium-ink: #eef1ff;
+}
+
+/* ---------------- smooth scrolling ---------------- */
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ---------------- scroll progress indicator ---------------- */
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  z-index: 10000;
+  background: rgba(238, 241, 255, 0.08);
+  pointer-events: none;
+}
+
+.scroll-progress__fill {
+  height: 100%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: linear-gradient(90deg, var(--premium-blue-glow), var(--premium-blue-soft), #f3d9a4);
+  box-shadow: 0 0 10px rgba(91, 127, 255, 0.7);
+  will-change: transform;
+}
+
+/* ---------------- cursor glow ---------------- */
+
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 340px;
+  height: 340px;
+  margin: -170px 0 0 -170px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(91, 127, 255, 0.16), rgba(91, 127, 255, 0.05) 45%, transparent 70%);
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  will-change: transform;
+  mix-blend-mode: screen;
+}
+
+.cursor-glow.is-active {
+  opacity: 1;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cursor-glow {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-glow {
+    display: none;
+  }
+}
+
+/* ---------------- page transition overlay ---------------- */
+
+.page-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  background: var(--premium-navy-950);
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 0.9s ease;
+}
+
+.page-transition.is-hidden {
+  opacity: 0;
+}
+
+/* ---------------- button ripple effect ---------------- */
+
+.premium-ripple-overlay {
+  position: fixed;
+  z-index: 9995;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.premium-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  transform: scale(0);
+  pointer-events: none;
+  animation: premium-ripple-anim 0.65s ease-out forwards;
+}
+
+@keyframes premium-ripple-anim {
+  0% { transform: scale(0); opacity: 0.55; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+/* ---------------- section reveal animations ---------------- */
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-reveal].is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-reveal="fade"] {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ---------------- glassmorphism polish ---------------- */
+/* Additive sheen + refined blur/border on top of the base
+   .glass-card definition in main.css — no layout properties
+   are touched here, so existing spacing/sizing is untouched. */
+
+.glass-card {
+  position: relative;
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  border: 1px solid rgba(238, 241, 255, 0.14);
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.glass-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent 40%);
+  pointer-events: none;
+}
+
+.glass-card--interactive:hover,
+.glass-card--interactive:focus-within {
+  transform: translateY(-4px);
+  border-color: rgba(157, 180, 255, 0.35);
+  box-shadow: 0 20px 45px rgba(5, 7, 15, 0.45);
+}
+
+/* ---------------- heart-shaped back-to-top button ---------------- */
+
+.back-to-top {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 9996;
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgba(238, 241, 255, 0.25);
+  border-radius: 50%;
+  background: linear-gradient(155deg, var(--premium-royal-500), var(--premium-royal-700));
+  color: #ff6b8b;
+  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 26px rgba(5, 7, 15, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px) scale(0.85);
+  transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s ease, box-shadow 0.3s ease;
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  animation: premium-heartbeat 2.4s ease-in-out infinite;
+}
+
+.back-to-top:hover,
+.back-to-top:focus-visible {
+  box-shadow: 0 14px 34px rgba(255, 107, 139, 0.5);
+  transform: translateY(-3px) scale(1.06);
+}
+
+@keyframes premium-heartbeat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  15% { transform: translateY(0) scale(1.12); }
+  30% { transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back-to-top.is-visible {
+    animation: none;
+  }
+}
+
+/* ---------------- performance-friendly helpers ---------------- */
+
+.will-animate {
+  will-change: transform, opacity;
+}
+
+/* ---------------- responsiveness ---------------- */
+
+@media (max-width: 640px) {
+  .back-to-top {
+    right: 1rem;
+    bottom: 1rem;
+    width: 46px;
+    height: 46px;
+    font-size: 1rem;
+  }
+
+  .cursor-glow {
+    display: none;
+  }
+}
